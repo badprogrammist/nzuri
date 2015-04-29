@@ -23,19 +23,19 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(Environment.BASE_PACKAGE)
-@Import({ SecurityConfig.class })
-public class AppConfig  extends WebMvcConfigurerAdapter {
+@Import({SecurityConfig.class})
+public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
-    
+
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver getMultipartResolver() {
         return new CommonsMultipartResolver();
     }
-    
+
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -44,4 +44,25 @@ public class AppConfig  extends WebMvcConfigurerAdapter {
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("utf-8");
+        return resolver;
+    }
+
+//    @Override
+//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        converters.add(converter());
+////        converters.addDefaultHttpMessageConverters(converters);
+//    }
+//    
+//    @Bean
+//    public MappingJackson2HttpMessageConverter converter() {
+//        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+//        //do your customizations here...
+//        return converter;
+//    }
+    
 }

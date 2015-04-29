@@ -5,12 +5,16 @@
  */
 package ru.nzuri.controllers.security;
 
+import java.io.IOException;
 import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import ru.nzuri.controllers.file.FileHelper;
+import ru.nzuri.domain.file.File;
 import ru.nzuri.domain.user.UserData;
 import ru.nzuri.security.AuthenticationService;
 import ru.nzuri.security.Credentials;
@@ -56,17 +60,33 @@ public class SecurityController {
     }
     
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
-    public String signUp(@ModelAttribute("registrationData") RegistrationData rd) {
+    public String signUp(
+            MultipartFile icon,
+            String name,
+            String lastname,
+            String patronymic,
+            String email,
+            String password) {
         try {
-            UserData userData = createUserData(rd);
-            registrationService.register(rd,userData);
+            UserData userData = createUserData(name, lastname, patronymic, icon);
+            Credentials credentials = createCredentials(email, password);
+            registrationService.register(credentials,userData);
         } catch (SecurityException ex) {
             return "redirect:/registration";
         }
         return "redirect:/";
     }
     
-    private UserData createUserData(RegistrationData rd) {
-        return new UserData(rd.getName(), rd.getLastname() ,rd.getPatronymic());
+    private Credentials createCredentials(String email, String password) {
+        return new Credentials(email, password);
+    }
+    
+    private UserData createUserData(String name,String lastname,String patronymic, MultipartFile icon) {
+        File iconFile = null;
+        try {
+            iconFile = FileHelper.createFile(icon);
+        } catch (IOException ex) {
+        }
+        return new UserData(name, lastname, patronymic, iconFile);
     }
 }

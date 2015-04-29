@@ -5,6 +5,7 @@
  */
 package ru.nzuri.controllers.security;
 
+import ru.nzuri.domain.file.File;
 import ru.nzuri.security.Credentials;
 
 /**
@@ -18,12 +19,15 @@ public class RegistrationData extends Credentials {
     private String lastname;
     
     private String patronymic;
+    
+    private File icon;
 
-    public RegistrationData(String name, String lastname, String patronymic, String login, String password) {
+    public RegistrationData(File icon, String name, String lastname, String patronymic, String login, String password) {
         super(login, password);
         this.name = name;
         this.lastname = lastname;
         this.patronymic = patronymic;
+        this.icon = icon;
     }
     
     public RegistrationData() {
@@ -51,6 +55,14 @@ public class RegistrationData extends Credentials {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public File getIcon() {
+        return icon;
+    }
+
+    public void setIcon(File icon) {
+        this.icon = icon;
     }
 
    

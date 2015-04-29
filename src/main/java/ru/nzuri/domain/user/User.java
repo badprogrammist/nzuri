@@ -33,7 +33,9 @@ import ru.nzuri.domain.AbstractEntity;
             query = "Select c from User c where c.credential.login = :login")})
 public class User extends AbstractEntity implements UserDetails {
 
-    public static final User NULL = new User(new UserCredential("NULL", "NULL"),new UserData("NULL", "NULL", "NULL"));
+    public static final User NULL = new User(
+            new UserCredential("NULL", "NULL"),
+            new UserData("NULL", "NULL", "NULL",null));
     
     @Embedded
     private UserCredential credential;

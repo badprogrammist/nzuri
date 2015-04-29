@@ -3,23 +3,33 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+
 <t:default title="Login">
-    <form:form method="post" action="signUp" modelAttribute="registrationData">
+
+    
+
+
+
+    <form method="post" enctype="multipart/form-data" action="signUp">
+
+        <t:image-uploader fileName="icon"/>
         
-        <form:label path="name">Имя</form:label>
-        <form:input id="name"  path="name"/>
-        
-        <form:label path="lastname">Фамилия</form:label>
-        <form:input  path="lastname"/>
-        
-        <form:label path="patronymic">Отчество</form:label>
-        <form:input  path="patronymic"/>
-        
-        <form:label path="login">Логин</form:label>
-        <form:input  path="login"/>
-        
-        <form:label path="password">Пароль</form:label>
-        <form:password  path="password"/>
+        <label for="name">Имя</label>
+        <input id="name" type="text"  name="name"/>
+        <br/>
+        <label for="lastname">Фамилия</label>
+        <input id="lastname" type="text" name="lastname"/>
+        <br/>
+        <label for="patronymic">Отчество</label>
+        <input id="patronymic" type="text" name="patronymic"/>
+        <br/>
+        <label for="email">E-mail</label>
+        <input id="email" type="text" name="email"/>
+        <br/>
+        <label for="password">Пароль</label>
+        <input id="password" type="password"  name="password"/>
+        <br/>
         <button type="submit">Save</button>
-    </form:form>
+    </form>
 </t:default> 

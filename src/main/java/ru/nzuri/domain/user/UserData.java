@@ -5,16 +5,26 @@
 package ru.nzuri.domain.user;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import ru.nzuri.domain.file.File;
+import ru.nzuri.domain.file.FileHolder;
 
 /**
  *
  * @author Ильдар
  */
 @Embeddable
-public class UserData implements Serializable {
+public class UserData implements Serializable,FileHolder {
 
+    @ManyToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    @JoinColumn(name = "icon_id")
+    private File icon;
+    
     @Column(name = "name",nullable = false)
     private String name;
     
@@ -27,10 +37,11 @@ public class UserData implements Serializable {
     public UserData() {
     }
 
-    public UserData(String name, String lastname, String patronymic) {
+    public UserData(String name, String lastname, String patronymic,File icon) {
         this.name = name;
         this.lastname = lastname;
         this.patronymic = patronymic;
+        this.icon = icon;
     }
 
     public String getName() {
@@ -55,6 +66,24 @@ public class UserData implements Serializable {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public File getIcon() {
+        return icon;
+    }
+
+    public void setIcon(File icon) {
+        this.icon = icon;
+    }
+
+    @Override
+    public void setFile(File file) {
+        this.icon = file;
+    }
+
+    @Override
+    public File getFile() {
+        return icon;
     }
     
     
