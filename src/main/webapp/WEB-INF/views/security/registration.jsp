@@ -7,14 +7,21 @@
 
 <t:default title="Login">
 
-    
+
 
 
 
     <form method="post" enctype="multipart/form-data" action="signUp">
 
         <t:image-uploader fileName="icon"/>
-        
+
+        <select name="role">
+            <c:forEach var="roleItem" items="${roles}">
+                <option value="${roleItem.name()}">${roleItem.title}</option>
+            </c:forEach>
+        </select>
+
+
         <label for="name">Имя</label>
         <input id="name" type="text"  name="name"/>
         <br/>

@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nzuri.domain.user.Role;
-import ru.nzuri.domain.user.Roles;
 import ru.nzuri.domain.user.UserCredential;
 import ru.nzuri.domain.user.UserData;
 import ru.nzuri.security.Credentials;
@@ -32,11 +31,11 @@ public class DefaultRegistrationService implements RegistrationService {
     private UserService userService;
     
     @Override
-    public boolean register(Credentials credentials, UserData userData) {
-        if (credentials.isValid()) {
+    public boolean register(Credentials credentials, UserData userData, String role) {
+        if (credentials.isValid() && role != null && !role.isEmpty()) {
             UserDetails userDetails = this.userService.loadUserByUsername(credentials.getLogin());
             if (userDetails == null) {
-                Role userRole = userService.createRole(Roles.ROLE_USER.name());
+                Role userRole = userService.createRole(role);
                 UserCredential userCredential = createUserCredential(credentials);
                 if (userRole != null) {
                     userService.registerNewUser(userCredential,userData, userRole);

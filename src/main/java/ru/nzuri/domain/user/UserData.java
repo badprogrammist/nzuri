@@ -21,7 +21,7 @@ import ru.nzuri.domain.file.FileHolder;
 @Embeddable
 public class UserData implements Serializable,FileHolder {
 
-    @ManyToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "icon_id")
     private File icon;
     
@@ -44,6 +44,20 @@ public class UserData implements Serializable,FileHolder {
         this.icon = icon;
     }
 
+    public String getFullName() {
+        StringBuilder sb = new StringBuilder();
+        if(name != null && !name.isEmpty()) {
+            sb.append(name).append(" ");
+        }
+        if(lastname != null && !lastname.isEmpty()) {
+            sb.append(lastname).append(" ");
+        }
+        if(patronymic != null && !patronymic.isEmpty()) {
+            sb.append(patronymic).append(" ");
+        }
+        return sb.toString();
+    }
+    
     public String getName() {
         return name;
     }

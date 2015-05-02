@@ -15,11 +15,30 @@ import ru.nzuri.domain.file.File;
  */
 public class FileHelper {
 
+    //private final static String STREAM_IMAGE_TYPE = "application/octet-stream";
+    
     public static File createFile(MultipartFile multipartFile) throws IOException {
-        String fileName = multipartFile.getOriginalFilename();
-        String contentType = multipartFile.getContentType();
+        String fileName = generateFileName(multipartFile);
+        String contentType = generateContentType(multipartFile);
         byte[] source = multipartFile.getBytes();
         File file = new File(source, contentType, fileName);
         return file;
     }
+
+    private static String generateFileName(MultipartFile multipartFile) {
+        if (multipartFile.getOriginalFilename() == null || "".equals(multipartFile.getOriginalFilename())) {
+            return File.DEFAULT_FILENAME + "." + File.DEFAULT_IMAGE_FORMAT;
+        } else {
+            return multipartFile.getOriginalFilename();
+        }
+    }
+    
+    private static String generateContentType(MultipartFile multipartFile) {
+//        if(multipartFile.getContentType().equals(STREAM_IMAGE_TYPE)) {
+//            return  File.DEFAULT_IMAGE_CONTENT_TYPE;
+//        } else {
+            return multipartFile.getContentType();
+//        }
+    }
+
 }

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -31,9 +32,6 @@ public class DefaultAuthenticationService implements AuthenticationService {
     private UserService userService;
 
     @Inject
-//    @Autowired
-//    @Qualifier("org.springframework.security.authenticationManager")
-//    @Qualifier("org.springframework.security.authentication.ProviderManager#0")
     private AuthenticationManager authManager;
 
     @Override
@@ -57,6 +55,16 @@ public class DefaultAuthenticationService implements AuthenticationService {
     @Override
     public boolean isAuthenticated() {
         return SecurityContextHolder.getContext().getAuthentication().isAuthenticated() && SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser";
+    }
+    
+    @Override
+    public boolean hasRole(String authority) {
+        for (GrantedAuthority  ga : SecurityContextHolder.getContext().getAuthentication().getAuthorities()) {
+            if(ga.getAuthority().equals(authority)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     @Override

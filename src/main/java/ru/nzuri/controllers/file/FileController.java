@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import ru.nzuri.domain.file.File;
+import ru.nzuri.services.file.FileService;
 
 /**
  *
@@ -31,7 +33,10 @@ public class FileController {
     public static final String SESSION_FILES_NAME = "session_files";
     public static final String SESSION_FILES_PARAMETER_NAME = "session";
 
-    @RequestMapping(value = "/file/upload", method = RequestMethod.POST,produces = "application/json")
+    @Inject
+    private FileService fileService;
+
+    @RequestMapping(value = "/file/upload", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody
     List<File> upload(MultipartHttpServletRequest request, HttpServletResponse response) {
         List<File> files = new LinkedList<>();
@@ -52,7 +57,7 @@ public class FileController {
         return files;
     }
 
-    @RequestMapping(value = "/file/get/session/{index}", method = RequestMethod.GET)
+    @RequestMapping(value = "/file/{index}/session", method = RequestMethod.GET)
     public void get(HttpServletRequest request, HttpServletResponse response, @PathVariable Integer index) {
         List<File> files = (List<File>) request.getSession().getAttribute(SESSION_FILES_NAME);
         if (files != null && !files.isEmpty()) {
@@ -65,9 +70,24 @@ public class FileController {
                 }
 
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }
+    }
+
+    @RequestMapping(value = "/file/{id}", method = RequestMethod.GET)
+    public void get(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id) {
+        File file = fileService.get(id);
+        try {
+            if (file != null) {
+                response.setContentType(file.getContentType());
+                response.setHeader("Content-disposition", "attachment; filename=\"" + file.getFileName() + "\"");
+                response.setHeader("Accept-Ranges", "bytes");
+                response.setHeader("Content-Length", String.valueOf(file.getSource().length));
+                FileCopyUtils.copy(file.getSource(), response.getOutputStream());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

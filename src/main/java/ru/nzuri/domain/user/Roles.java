@@ -17,6 +17,7 @@ import ru.nzuri.domain.EnumType;
 public enum Roles implements EnumType {
     
     ROLE_USER("Пользователь"),
+    ROLE_MASTER("Мастер"),
     ROLE_ADMIN("Администратор");
     
     Roles(String title) {

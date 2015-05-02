@@ -3,17 +3,15 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:default title="Профиль">
     
+    <t:image fileId="${profile.user.userData.icon.id}"/>
+    <h1>${profile.user.userData.fullName}</h1>
+    
     <div id="examples">
         <c:forEach var="exampleItem" items="${profile.examples}">
             <t:image fileId="${exampleItem.image.id}"/>
         </c:forEach>
     </div>
     
-    <form action="profile/example/upload" class="dropzone" enctype="multipart/form-data">
-        <div class="fallback">
-            <input name="file" type="file" multiple />
-        </div>
-    </form>
 
 
 </t:default>

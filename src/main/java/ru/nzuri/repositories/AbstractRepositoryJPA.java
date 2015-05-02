@@ -45,8 +45,8 @@ public abstract class AbstractRepositoryJPA<E extends AbstractEntity> implements
     }
 
     @Override
-    public void update(E entity) {
-        getEntityManager().merge(entity);
+    public E update(E entity) {
+        return getEntityManager().merge(entity);
     }
 
     @Override

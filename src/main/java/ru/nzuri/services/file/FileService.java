@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.nzuri.services.profile;
+package ru.nzuri.services.file;
 
 import ru.nzuri.domain.file.File;
-import ru.nzuri.domain.profile.Example;
-import ru.nzuri.domain.profile.Profile;
 import ru.nzuri.services.EntityService;
 
 /**
  *
  * @author bad
  */
-public interface ExampleService extends EntityService<Example> {
-    public Example addExample(Profile profile, File image, String comment);
+public interface FileService extends EntityService<File> {
+    
 }

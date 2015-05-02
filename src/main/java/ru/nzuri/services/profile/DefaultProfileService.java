@@ -9,10 +9,9 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nzuri.domain.EntityRepository;
-import ru.nzuri.domain.file.File;
-import ru.nzuri.domain.profile.Example;
-import ru.nzuri.domain.profile.ExampleRepository;
 import ru.nzuri.domain.profile.Profile;
+import ru.nzuri.domain.profile.ProfileRepository;
+import ru.nzuri.domain.user.User;
 import ru.nzuri.services.AbstractService;
 
 /**
@@ -21,26 +20,30 @@ import ru.nzuri.services.AbstractService;
  */
 @Service
 @Transactional
-public class DefaultExampleService extends AbstractService<Example> implements ExampleService {
+public class DefaultProfileService extends AbstractService<Profile> implements ProfileService {
 
     @Inject
-    private ExampleRepository exampleRepository;
+    private ProfileRepository profileRepository;
     
     @Override
-    public Example addExample(Profile profile, File image, String comment) {
-        Example example = new Example(profile, image, comment);
-        exampleRepository.store(example);
-        return example;
+    public Profile getProfile(User user) {
+        Profile profile = profileRepository.findByUser(user);
+        if(profile.equals(Profile.NULL)) {
+            profile = new Profile(user);
+            store(profile);
+        }
+        return profile;
     }
+
+    
     
     @Override
     protected EntityRepository getRepository() {
-        return exampleRepository;
+        return profileRepository;
     }
 
     @Override
-    protected Example createEmptyEntity() {
-        return new Example();
+    protected Profile createEmptyEntity() {
+        return new Profile();
     }
-    
 }

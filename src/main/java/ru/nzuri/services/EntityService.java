@@ -16,7 +16,7 @@ public interface EntityService<E extends AbstractEntity> {
 
     public void store(E entity);
     
-    public void update(E entity);
+    public E update(E entity);
     
     public List<E> getAll();
     

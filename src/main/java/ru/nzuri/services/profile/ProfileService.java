@@ -5,15 +5,15 @@
  */
 package ru.nzuri.services.profile;
 
-import ru.nzuri.domain.file.File;
-import ru.nzuri.domain.profile.Example;
 import ru.nzuri.domain.profile.Profile;
+import ru.nzuri.domain.user.User;
 import ru.nzuri.services.EntityService;
 
 /**
  *
  * @author bad
  */
-public interface ExampleService extends EntityService<Example> {
-    public Example addExample(Profile profile, File image, String comment);
+public interface ProfileService extends EntityService<Profile> {
+    public Profile getProfile(User user);
+    
 }

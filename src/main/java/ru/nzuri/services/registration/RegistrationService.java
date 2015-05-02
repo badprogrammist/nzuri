@@ -13,5 +13,5 @@ import ru.nzuri.security.Credentials;
  * @author bad
  */
 public interface RegistrationService {
-    public boolean register(Credentials credentials, UserData userData);
+    public boolean register(Credentials credentials, UserData userData, String role);
 }

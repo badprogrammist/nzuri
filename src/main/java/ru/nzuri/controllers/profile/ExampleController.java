@@ -5,16 +5,20 @@
  */
 package ru.nzuri.controllers.profile;
 
-import java.util.Map;
+import java.io.IOException;
 import javax.inject.Inject;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-import ru.nzuri.domain.profile.Example;
+import org.springframework.web.multipart.MultipartFile;
+import ru.nzuri.controllers.file.FileHelper;
+import ru.nzuri.domain.file.File;
+import ru.nzuri.domain.profile.Profile;
+import ru.nzuri.domain.user.User;
+import ru.nzuri.security.AuthenticationService;
 import ru.nzuri.services.profile.ExampleService;
+import ru.nzuri.services.profile.ProfileService;
 
 /**
  *
@@ -23,41 +27,33 @@ import ru.nzuri.services.profile.ExampleService;
 @Controller
 public class ExampleController {
     
-    private static int count = 10;
+    @Inject
+    private ProfileService profileService;
     
     @Inject
     private ExampleService exampleService;
     
-    @RequestMapping(value = "/examples", method = RequestMethod.GET)
-    public ModelAndView index() {
-        ModelAndView model = new ModelAndView();
-        model.addObject("examples", exampleService.getAll());
-        model.addObject("count", count);
-        model.setViewName("profile/index");
-        return model;
+    @Inject
+    private AuthenticationService authenticationService;
+    
+    
+    @Secured("ROLE_MASTER")
+    @RequestMapping(value = "/profile/example/upload", method = RequestMethod.POST)
+    public void handleExampleImageUpload(MultipartFile file) {
+        User currentUser = authenticationService.getPrincipal();
+        if(currentUser != null) {
+            Profile profile = profileService.getProfile(currentUser);
+            if(profile != null) {
+                File image;
+                try {
+                    image = FileHelper.createFile(file);
+                    exampleService.addExample(profile,image , "");
+                } catch (IOException ex) {
+                }
+            }
+        }
     }
     
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/example/create", method = RequestMethod.GET)
-    public String create(Map<String, Object> map) {
-        map.put("example", new Example());
-        return "profile/create";
-    }
     
-//    @Secured("hasRole(USER)")
-    @RequestMapping(value = "/example/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("example") Example example) {
-        exampleService.store(example);
-        return "redirect:/examples";
-    }
-    
-//    @Secured("hasRole(USER)")
-    @RequestMapping(value = "/example/increment", method = RequestMethod.POST)
-    public ModelAndView increment() {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("count", ++count);
-        mav.setViewName("profile/count");
-        return mav;
-    }
     
 }

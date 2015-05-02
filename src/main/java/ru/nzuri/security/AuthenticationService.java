@@ -18,5 +18,7 @@ public interface AuthenticationService {
     
     public boolean isAuthenticated();
     
+    public boolean hasRole(String authority);
+    
     public User getPrincipal();
 }

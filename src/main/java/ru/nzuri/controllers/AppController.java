@@ -5,10 +5,15 @@
  */
 package ru.nzuri.controllers;
 
+import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import ru.nzuri.domain.user.Roles;
+import ru.nzuri.domain.user.User;
+import ru.nzuri.security.AuthenticationService;
+import ru.nzuri.services.profile.ProfileService;
 
 /**
  *
@@ -16,44 +21,26 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class AppController {
-    
+
+    @Inject
+    private AuthenticationService authenticationService;
+
+    @Inject
+    private ProfileService profileService;
+
     @RequestMapping(value = "/", method = {RequestMethod.GET})
     public ModelAndView index() {
         ModelAndView model = new ModelAndView();
-        model.addObject("title", "Spring Security Tutorial");
-        model.addObject("message", "Welcome Page !");
-        model.setViewName("index");
-        return model;
-    }
-    
-    @RequestMapping(value = "/about", method = {RequestMethod.GET})
-    public ModelAndView about() {
-        ModelAndView model = new ModelAndView();
-        model.addObject("content", "About content");
-        model.setViewName("about");
+        if (authenticationService.isAuthenticated()) {
+            if (authenticationService.hasRole(Roles.ROLE_MASTER.name())) {
+                User user = authenticationService.getPrincipal();
+                model.addObject("profile", profileService.getProfile(user));
+                model.setViewName("profile/index");
+            }
+        } else {
+            model.setViewName("index");
+        }
         return model;
     }
 
-//    @RequestMapping(value = "/protected**", method = RequestMethod.GET)
-//    public ModelAndView protectedPage() {
-//
-//        ModelAndView model = new ModelAndView();
-//        model.addObject("title", "Spring Security 3.2.4 Hello World Tutorial");
-//        model.addObject("message", "This is protected page - Only for Admin Users!");
-//        model.setViewName("protected");
-//        return model;
-//
-//    }
-//
-//    @RequestMapping(value = "/confidential**", method = RequestMethod.GET)
-//    public ModelAndView adminPage() {
-//
-//        ModelAndView model = new ModelAndView();
-//        model.addObject("title", "Spring Security 3.2.4 Hello World Tutorial");
-//        model.addObject("message", "This is confidential page - Need Super Admin Role!");
-//        model.setViewName("protected");
-//
-//        return model;
-//
-//    }
 }

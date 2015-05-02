@@ -6,6 +6,7 @@
 package ru.nzuri.controllers.security;
 
 import java.io.IOException;
+import java.util.Arrays;
 import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ru.nzuri.controllers.file.FileHelper;
 import ru.nzuri.domain.file.File;
+import ru.nzuri.domain.user.Roles;
 import ru.nzuri.domain.user.UserData;
 import ru.nzuri.security.AuthenticationService;
 import ru.nzuri.security.Credentials;
@@ -54,7 +56,7 @@ public class SecurityController {
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration() {
         ModelAndView model = new ModelAndView();
-        model.addObject("registrationData", new RegistrationData());
+        model.addObject("roles", Arrays.asList(Roles.values()));
         model.setViewName("security/registration");
         return model;
     }
@@ -62,6 +64,7 @@ public class SecurityController {
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
     public String signUp(
             MultipartFile icon,
+            Roles role,
             String name,
             String lastname,
             String patronymic,
@@ -70,7 +73,7 @@ public class SecurityController {
         try {
             UserData userData = createUserData(name, lastname, patronymic, icon);
             Credentials credentials = createCredentials(email, password);
-            registrationService.register(credentials,userData);
+            registrationService.register(credentials,userData, role.name());
         } catch (SecurityException ex) {
             return "redirect:/registration";
         }

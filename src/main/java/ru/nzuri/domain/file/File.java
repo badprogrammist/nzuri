@@ -26,6 +26,11 @@ import ru.nzuri.domain.AbstractEntity;
 @JsonIgnoreProperties({"source"}) 
 public class File extends AbstractEntity {
     
+    public static final String DEFAULT_FILENAME = "noname";
+    public static final String DEFAULT_IMAGE_FORMAT = "jpg";
+    public static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpeg";
+    
+    
     @Column(name = "source", nullable = false)
     private byte[] source;
     

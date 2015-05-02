@@ -1,6 +1,11 @@
 <%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8"%>
-<h3>Menu</h3>
-<a href="about">About</a>
-<a href="examples">Examples</a>
-<a href="login">Login</a>
-<a href="registration">Registration</a>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<a href="${pageContext.request.contextPath}/masters">Мастера</a>
+<sec:authorize access="isAuthenticated()">
+    <a href="${pageContext.request.contextPath}/profile">Профиль</a>
+</sec:authorize>
+<sec:authorize access="!isAuthenticated()">
+    <a href="${pageContext.request.contextPath}/login">Вход</a>
+    <a href="${pageContext.request.contextPath}/registration">Регистрация</a>
+</sec:authorize>

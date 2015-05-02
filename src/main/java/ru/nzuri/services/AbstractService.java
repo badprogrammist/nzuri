@@ -17,7 +17,7 @@ import ru.nzuri.domain.EntityRepository;
 @Transactional
 public abstract class AbstractService<E extends AbstractEntity> implements EntityService<E> {
     
-    protected abstract EntityRepository getRepository();
+    protected abstract EntityRepository<E> getRepository();
     protected abstract E createEmptyEntity();
 
     @Override
@@ -26,8 +26,8 @@ public abstract class AbstractService<E extends AbstractEntity> implements Entit
     }
     
     @Override
-    public void update(E entity) {
-        getRepository().update(entity);
+    public E update(E entity) {
+        return getRepository().update(entity);
     }
     
     @Override
