@@ -11,11 +11,13 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import org.eclipse.persistence.annotations.Cache;
 
 /**
  *
  * @author bad
  */
+@Cache
 @MappedSuperclass
 public class AbstractEntity implements Serializable {
     

@@ -1,3 +1,5 @@
 $(function () {
-    $('.picedit_input').picEdit();
+    $('.picedit_input').picEdit({
+        maxWidth:300
+    });
 });

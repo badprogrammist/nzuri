@@ -5,38 +5,73 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 
-<t:default title="Login">
+<t:default title="Регистрация">
+
+    <div class="row">
+        <div class="col-md-5 col-md-offset-7">
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-lock"></span> Регистрация</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" action="signUp">
+                        <div class="form-group">
+                            <t:image-uploader styleClass="form-control img-thumbnail" fileName="icon"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="role" class="col-sm-3 control-label">Я</label>
+                            <div class="col-sm-9">
+                                <select id="role" class="form-control" name="role">
+                                    <c:forEach var="roleItem" items="${roles}">
+                                        <option value="${roleItem.name()}">${roleItem.title}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label">Имя</label>
+                            <div class="col-sm-9">
+                                <input id="name" class="form-control" type="text" placeholder="Введите имя" name="name" required="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname" class="col-sm-3 control-label">Фамилия</label>
+                            <div class="col-sm-9">
+                                <input id="lastname" class="form-control" type="text" placeholder="Введите фамилию" name="lastname" required="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="patronymic" class="col-sm-3 control-label">Отчество</label>
+                            <div class="col-sm-9">
+                                <input id="patronymic" class="form-control" type="text" placeholder="Введите отчество" name="patronymic" required="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label">Почта</label>
+                            <div class="col-sm-9">
+                                <input id="email" name="email" type="email" class="form-control"  placeholder="Введите почту" required="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-3 control-label">Пароль</label>
+                            <div class="col-sm-9">
+                                <input id="password" type="password" class="form-control" placeholder="Введите пароль" required="true" path="password"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group last">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-primary btn-sm btn-block">Зарегистрироваться</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <a href="login">Войти в систему</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
 
-
-    <form method="post" enctype="multipart/form-data" action="signUp">
-
-        <t:image-uploader fileName="icon"/>
-
-        <select name="role">
-            <c:forEach var="roleItem" items="${roles}">
-                <option value="${roleItem.name()}">${roleItem.title}</option>
-            </c:forEach>
-        </select>
-
-
-        <label for="name">Имя</label>
-        <input id="name" type="text"  name="name"/>
-        <br/>
-        <label for="lastname">Фамилия</label>
-        <input id="lastname" type="text" name="lastname"/>
-        <br/>
-        <label for="patronymic">Отчество</label>
-        <input id="patronymic" type="text" name="patronymic"/>
-        <br/>
-        <label for="email">E-mail</label>
-        <input id="email" type="text" name="email"/>
-        <br/>
-        <label for="password">Пароль</label>
-        <input id="password" type="password"  name="password"/>
-        <br/>
-        <button type="submit">Save</button>
-    </form>
 </t:default> 

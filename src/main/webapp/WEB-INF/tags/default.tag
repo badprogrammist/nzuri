@@ -5,22 +5,31 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/picedit/picedit.min.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dropzone/dropzone.min.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
         <title>${title}</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/picedit/picedit.min.css"/>
-        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/dropzone/dropzone.min.css"/>
     </head>
     <body>
         <jsp:directive.include  file="default-header.tag"/>
-        <sec:authorize access="isAuthenticated()">
-            <sec:authentication var="principal" property="principal" />
-            ${principal.username}
-            <t:image fileId="${principal.userData.icon.id}"/>
-        </sec:authorize>
-        <jsp:doBody/>
+        <div class="container full-height">
+            <jsp:doBody/>
+        </div>
+
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/picedit/picedit.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/dropzone/dropzone.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
     </body>
 </html>

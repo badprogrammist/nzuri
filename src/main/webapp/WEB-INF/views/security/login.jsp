@@ -3,13 +3,46 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:default title="Login">
-    <form:form method="post" action="signIn" modelAttribute="credentials" >
-        <form:label path="login">Логин</form:label>
-        <form:input  path="login"/>
-        
-        <form:label path="password">Пароль</form:label>
-        <form:password  path="password"/>
-        <button type="submit">Save</button>
-    </form:form>
+<t:default title="Вход">
+
+    <div class="row">
+        <div class="col-md-4 col-md-offset-7">
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-lock"></span> Вход</div>
+                <div class="panel-body">
+                    <form:form class="form-horizontal" role="form" method="post" action="signIn" modelAttribute="credentials" >
+                        <div class="form-group">
+                            <label for="emailInput" class="col-sm-3 control-label">Почта</label>
+                            <div class="col-sm-9">
+                                <form:input id="emailInput"  path="login" type="email" class="form-control"  placeholder="Введите почту" required="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-sm-3 control-label">Пароль</label>
+                            <div class="col-sm-9">
+                                <form:password id="inputPassword" class="form-control" placeholder="Введите пароль" required="true" path="password"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <div class="checkbox">
+                                    <label><input type="checkbox"/>Запомнить меня</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group last">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-success btn-sm btn-block">Войти</button>
+                            </div>
+                        </div>
+                    </form:form>
+                </div>
+                <div class="panel-footer">
+                    Еще не зарегистрированы? <a href="register">Зарегистрироваться</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </t:default> 

@@ -14,5 +14,5 @@ public class Environment {
     public static final String DB_USERNAME = "postgres";
     public static final String DB_PASSWORD = "12345";
     public static final String DB_DRIVER_CLASS_NAME = "org.postgresql.Driver";
-    public static final String DB_URL = "jdbc:postgresql://localhost:5432/nzuri ";
+    public static final String DB_URL = "jdbc:postgresql://localhost:5432/nzuri";
 }
