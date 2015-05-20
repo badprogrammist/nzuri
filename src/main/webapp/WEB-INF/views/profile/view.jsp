@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:two-column title="Профиль">
@@ -8,6 +8,9 @@
     </jsp:attribute>
     <jsp:body>
         <div class="block">
+            <c:if test="${editable}">
+                <a href="master/edit">Редактировать</a>
+            </c:if>
             <h2>Примеры работ</h2>
             <c:forEach var="exampleItem" items="${profile.examples}">
                 <div class="col-xs-6 col-md-3">
@@ -20,7 +23,6 @@
                 </div>
             </c:forEach>
         </div>
-
 
 
     </jsp:body>

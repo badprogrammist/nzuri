@@ -22,7 +22,6 @@
                     <t:image style="height:30px;  vertical-align:middle;" styleClass="img-circle" fileId="${principal.userData.icon.id}"/>
                     ${principal.username}
                 </p>
-                
             </sec:authorize>
             <sec:authorize access="!isAuthenticated()">
                 <ul class="nav navbar-nav navbar-right">

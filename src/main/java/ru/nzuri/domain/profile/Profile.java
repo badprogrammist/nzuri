@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -42,7 +43,11 @@ public class Profile extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Example> examples = new ArrayList<>();
 
     public Profile() {
@@ -66,6 +71,17 @@ public class Profile extends AbstractEntity {
 
     public void setExamples(List<Example> examples) {
         this.examples = examples;
+    }
+
+    public Address getAddress() {
+        if(address == null) {
+            address = new Address();
+        }
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
 }

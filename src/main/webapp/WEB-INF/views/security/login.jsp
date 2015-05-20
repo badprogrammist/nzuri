@@ -38,7 +38,7 @@
                     </form:form>
                 </div>
                 <div class="panel-footer">
-                    Еще не зарегистрированы? <a href="register">Зарегистрироваться</a>
+                    Еще не зарегистрированы? <a href="registration">Зарегистрироваться</a>
                 </div>
             </div>
         </div>
