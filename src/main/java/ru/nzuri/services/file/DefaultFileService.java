@@ -31,7 +31,7 @@ public class DefaultFileService extends AbstractService<File> implements FileSer
     }
 
     @Override
-    protected File createEmptyEntity() {
+    public File createEmptyEntity() {
         return new File();
     }
     

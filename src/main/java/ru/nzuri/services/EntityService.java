@@ -25,4 +25,6 @@ public interface EntityService<E extends AbstractEntity> {
     public void remove(Long id);
     
     public void remove(E entity);
+    
+    public E createEmptyEntity();
 }

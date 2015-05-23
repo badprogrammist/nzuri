@@ -1,9 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:two-column title="Профиль">
+<%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
+<%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
+<layout:two-column title="Профиль">
     <jsp:attribute name="left">
-        <t:image styleClass="img-responsive img-border" fileId="${profile.user.userData.icon.id}"/>
+        <common:image styleClass="img-responsive img-border" fileId="${profile.user.userData.icon.id}"/>
         <h2>${profile.user.userData.fullName}</h2>
     </jsp:attribute>
     <jsp:body>
@@ -15,7 +16,7 @@
             <c:forEach var="exampleItem" items="${profile.examples}">
                 <div class="col-xs-6 col-md-3">
                     <a href="#" class="thumbnail">
-                        <t:image fileId="${exampleItem.image.id}"/>
+                        <common:image fileId="${exampleItem.image.id}"/>
                         <div class="caption">
                             <p>${exampleItem.comment}</p>
                         </div>
@@ -26,4 +27,4 @@
 
 
     </jsp:body>
-</t:two-column>
+</layout:two-column>

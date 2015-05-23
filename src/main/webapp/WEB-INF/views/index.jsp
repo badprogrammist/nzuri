@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:default title="Welcome">
+<%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
+<layout:default title="Welcome">
     <h1>${title} ${message}</h1>
-</t:default>
+</layout:default>
 

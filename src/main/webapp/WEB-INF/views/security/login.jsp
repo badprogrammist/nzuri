@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:default title="Вход">
+<%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
+<layout:default title="Вход">
 
     <div class="row">
         <div class="col-md-4 col-md-offset-7">
@@ -45,4 +45,4 @@
     </div>
 
 
-</t:default> 
+</layout:default> 

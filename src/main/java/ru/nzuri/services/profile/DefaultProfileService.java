@@ -43,7 +43,7 @@ public class DefaultProfileService extends AbstractService<Profile> implements P
     }
 
     @Override
-    protected Profile createEmptyEntity() {
+    public Profile createEmptyEntity() {
         return new Profile();
     }
 }

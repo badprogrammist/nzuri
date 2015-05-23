@@ -1,7 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:default title="Профиль">
+<%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
+<%@taglib prefix="common" tagdir="/WEB-INF/tags/commons" %>
+<layout:default title="Профиль">
 
     <ul class="nav nav-tabs">
         <li role="presentation"><a href="${pageContext.request.contextPath}/master/edit">Основное</a></li>
@@ -12,7 +13,7 @@
         <c:forEach var="exampleItem" items="${profile.examples}">
             <div class="col-xs-6 col-md-3">
                 <a href="#" class="thumbnail">
-                    <t:image fileId="${exampleItem.image.id}"/>
+                    <common:image fileId="${exampleItem.image.id}"/>
                 </a>
             </div>
         </c:forEach>
@@ -26,4 +27,4 @@
         </form>
     </div>
 
-</t:default>
+</layout:default>

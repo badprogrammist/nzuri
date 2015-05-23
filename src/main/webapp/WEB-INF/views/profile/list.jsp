@@ -1,7 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:default title="Мастера">
+<%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
+<%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
+<layout:default title="Мастера">
 
     <div class="row full-height">
         <div class="col-sm-6 full-height">
@@ -10,7 +11,7 @@
                     <div class="media">
                         <div class="media-left">
                             <a href="master/${profileItem.id}">
-                                <t:image styleClass="media-object" style="width:64px;height:64px;" fileId="${profileItem.user.userData.icon.id}"/>
+                                <common:image styleClass="media-object" style="width:64px;height:64px;" fileId="${profileItem.user.userData.icon.id}"/>
                             </a>
                         </div>
                         <div class="media-body">
@@ -41,4 +42,4 @@
 
 
 
-</t:default>
+</layout:default>

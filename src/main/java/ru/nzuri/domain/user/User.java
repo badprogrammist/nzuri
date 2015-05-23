@@ -30,7 +30,8 @@ import ru.nzuri.domain.AbstractEntity;
     @NamedQuery(name = "User.findAll",
             query = "Select c from User c"),
     @NamedQuery(name = "User.findByLogin",
-            query = "Select c from User c where c.credential.login = :login")})
+            query = "Select c from User c where c.credential.login = :login")
+})
 public class User extends AbstractEntity implements UserDetails {
 
     public static final User NULL = new User(

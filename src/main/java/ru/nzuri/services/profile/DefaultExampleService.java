@@ -39,7 +39,7 @@ public class DefaultExampleService extends AbstractService<Example> implements E
     }
 
     @Override
-    protected Example createEmptyEntity() {
+    public Example createEmptyEntity() {
         return new Example();
     }
     

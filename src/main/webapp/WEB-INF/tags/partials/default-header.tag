@@ -1,5 +1,6 @@
 <%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
@@ -15,11 +16,16 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="${pageContext.request.contextPath}/masters">Мастера</a></li>
+                <sec:authorize  access="hasRole('ROLE_ADMIN')">
+                    <li><a href="${pageContext.request.contextPath}/specializations">Специализации</a></li>
+                </sec:authorize>
+                
             </ul>
             <sec:authorize access="isAuthenticated()">
+                
                 <sec:authentication var="principal" property="principal" />
                 <p class="navbar-text navbar-right">
-                    <t:image style="height:30px;  vertical-align:middle;" styleClass="img-circle" fileId="${principal.userData.icon.id}"/>
+                    <common:image style="height:30px;  vertical-align:middle;" styleClass="img-circle" fileId="${principal.userData.icon.id}"/>
                     ${principal.username}
                 </p>
             </sec:authorize>

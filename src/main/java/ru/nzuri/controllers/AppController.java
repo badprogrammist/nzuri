@@ -6,7 +6,6 @@
 package ru.nzuri.controllers;
 
 import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,6 +37,9 @@ public class AppController {
                 User user = authenticationService.getPrincipal();
                 Profile profile =profileService.getProfile(user);
                 model = ProfileController.prepareView(profile,user);
+            }
+            if (authenticationService.hasRole(Roles.ROLE_ADMIN.name())) {
+                model.setViewName("index");
             }
         } else {
             model.setViewName("index");

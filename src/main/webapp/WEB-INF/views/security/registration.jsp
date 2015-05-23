@@ -2,10 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
+<%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 
 
-<t:default title="Регистрация">
+<layout:default title="Регистрация">
 
     <div class="row">
         <div class="col-md-5 col-md-offset-7">
@@ -14,7 +15,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" action="signUp">
                         <div class="form-group">
-                            <t:image-uploader styleClass="form-control img-thumbnail" fileName="icon"/>
+                            <common:image-uploader styleClass="form-control img-thumbnail" fileName="icon"/>
                         </div>
                         <div class="form-group">
                             <label for="role" class="col-sm-3 control-label">Я</label>
@@ -53,7 +54,7 @@
                         <div class="form-group">
                             <label for="password" class="col-sm-3 control-label">Пароль</label>
                             <div class="col-sm-9">
-                                <input id="password" type="password" class="form-control" placeholder="Введите пароль" required="true" path="password"/>
+                                <input id="password" type="password" name="password" class="form-control" placeholder="Введите пароль" required="true" />
                             </div>
                         </div>
 
@@ -74,4 +75,4 @@
 
 
 
-</t:default> 
+</layout:default> 

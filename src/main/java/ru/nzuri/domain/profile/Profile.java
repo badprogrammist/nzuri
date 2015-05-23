@@ -6,7 +6,9 @@
 package ru.nzuri.domain.profile;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import ru.nzuri.domain.AbstractEntity;
 import ru.nzuri.domain.user.User;
+import ru.nzuri.domain.user.UserRoleRelation;
 
 /**
  *
@@ -49,6 +52,9 @@ public class Profile extends AbstractEntity {
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Example> examples = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "profile",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProfileSpecializationRelation> specializations = new ArrayList<>();
 
     public Profile() {
     }
@@ -82,6 +88,14 @@ public class Profile extends AbstractEntity {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<ProfileSpecializationRelation> getSpecializations() {
+        return specializations;
+    }
+
+    public void setSpecializations(List<ProfileSpecializationRelation> specializations) {
+        this.specializations = specializations;
     }
 
 }

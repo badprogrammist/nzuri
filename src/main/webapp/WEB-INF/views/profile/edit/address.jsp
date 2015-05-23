@@ -1,18 +1,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:default title="Профиль">
-
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
+<%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
+<layout:default title="Профиль">
+    
     <ul class="nav nav-tabs">
         <li role="presentation"><a href="${pageContext.request.contextPath}/master/edit">Основное</a></li>
         <li role="presentation"><a href="${pageContext.request.contextPath}/master/edit/examples">Примеры</a></li>
         <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/master/edit/address">Адрес</a></li>
     </ul>
 
-    <c:if test="${message != null and !message.isEmpty()}">
-        <div class="alert alert-success" role="alert">${message}</div>
-    </c:if>
+    <common:message/>
 
 
     <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/updateAddress" modelAttribute="address" >
@@ -53,4 +52,4 @@
         </div>
     </form:form>
 
-</t:default>
+</layout:default>
