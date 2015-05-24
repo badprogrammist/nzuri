@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.nzuri.controllers.message.Message;
+import ru.nzuri.controllers.message.MessageType;
 import ru.nzuri.domain.profile.Address;
 import ru.nzuri.domain.profile.Profile;
 import ru.nzuri.domain.user.User;
@@ -97,7 +99,7 @@ public class ProfileController {
         if(profile != null) {
             profile.getAddress().merge(address);
             profileService.update(profile);
-            redirectAttributes.addFlashAttribute("message", "Адрес успешно обновлен!");
+            redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Адрес успешно обновлен!"));
         }
         return "redirect:/master/edit/address";
     }

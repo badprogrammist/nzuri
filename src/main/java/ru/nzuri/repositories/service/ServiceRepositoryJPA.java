@@ -5,11 +5,13 @@
  */
 package ru.nzuri.repositories.service;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import ru.nzuri.domain.service.Service;
 import ru.nzuri.domain.service.ServiceRepository;
+import ru.nzuri.domain.service.Specialization;
 import ru.nzuri.repositories.AbstractRepositoryJPA;
 
 /**
@@ -29,6 +31,13 @@ public class ServiceRepositoryJPA extends AbstractRepositoryJPA<Service> impleme
     @Override
     protected EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    @Override
+    public List<Service> getServices(Specialization specialization) {
+        return getEntityManager().createNamedQuery("Service.findAllBySpecialization", Service.class)
+                .setParameter("specialization", specialization)
+                .getResultList();
     }
 
 }

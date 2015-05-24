@@ -3,12 +3,14 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
-<%@taglib prefix="specialization" tagdir="/WEB-INF/tags/specialization" %>
-<layout:default title="${specialization.title}">
+<%@taglib prefix="service" tagdir="/WEB-INF/tags/service" %>
+<layout:default title="${service.title}">
     
-    <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/specialization/update" modelAttribute="specialization" >
+    
+    
+    <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/service/update" modelAttribute="service" >
         
-        <specialization:form/>
+        <service:form/>
         
         <div class="form-group last">
             <div class="col-sm-offset-3 col-sm-6">

@@ -5,7 +5,6 @@
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <layout:default title="Специализации">
     
-    <common:message/>
     <a href="${pageContext.request.contextPath}/specialization/new">Создать специализацию</a>
     <table class="table">
         <c:forEach var="specialization" items="${specializations}">
@@ -13,6 +12,9 @@
                 <td>${specialization.title}</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/specialization/edit/${specialization.id}">Редактировать</a>
+                </td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/specialization/services/${specialization.id}">Услуги</a>
                 </td>
                 <td>
                     <form action="${pageContext.request.contextPath}/specialization/remove/${specialization.id}" method="POST">

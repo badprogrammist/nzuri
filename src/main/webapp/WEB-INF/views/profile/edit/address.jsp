@@ -11,9 +11,6 @@
         <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/master/edit/address">Адрес</a></li>
     </ul>
 
-    <common:message/>
-
-
     <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/updateAddress" modelAttribute="address" >
         <div class="form-group">
             <label for="city" class="col-sm-3 control-label">Город</label>

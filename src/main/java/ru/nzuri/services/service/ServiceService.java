@@ -5,7 +5,9 @@
  */
 package ru.nzuri.services.service;
 
+import java.util.List;
 import ru.nzuri.domain.service.Service;
+import ru.nzuri.domain.service.Specialization;
 import ru.nzuri.services.EntityService;
 
 /**
@@ -13,5 +15,5 @@ import ru.nzuri.services.EntityService;
  * @author bad
  */
 public interface ServiceService extends EntityService<Service> {
-    
+    public List<Service> getServices(Specialization specialization);
 }

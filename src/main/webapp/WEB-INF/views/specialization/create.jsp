@@ -6,8 +6,6 @@
 <%@taglib prefix="specialization" tagdir="/WEB-INF/tags/specialization" %>
 <layout:default title="Создание специализации">
     
-    <common:message/>
-    
     <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/specialization/save" modelAttribute="specialization" >
         
         <specialization:form/>

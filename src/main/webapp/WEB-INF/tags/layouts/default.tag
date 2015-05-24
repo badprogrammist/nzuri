@@ -1,6 +1,7 @@
 <%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="partial" tagdir="/WEB-INF/tags/partials" %>
+<%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@attribute name="title" %>
 <!DOCTYPE html>
 <html>
@@ -23,6 +24,7 @@
     <body>
         <jsp:directive.include  file="/WEB-INF/tags/partials/default-header.tag"/>
         <div class="container full-height">
+            <common:message/>
             <jsp:doBody/>
         </div>
 

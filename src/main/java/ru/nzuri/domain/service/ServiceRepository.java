@@ -5,6 +5,7 @@
  */
 package ru.nzuri.domain.service;
 
+import java.util.List;
 import ru.nzuri.domain.EntityRepository;
 
 /**
@@ -12,5 +13,5 @@ import ru.nzuri.domain.EntityRepository;
  * @author bad
  */
 public interface ServiceRepository extends EntityRepository<Service> {
-    
+    public List<Service> getServices(Specialization specialization);
 }

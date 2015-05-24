@@ -22,7 +22,9 @@ import ru.nzuri.domain.AbstractEntity;
 @Table(name = "services")
 @NamedQueries({
     @NamedQuery(name = "Service.findAll",
-            query = "Select c from Service c")
+            query = "Select c from Service c"),
+    @NamedQuery(name = "Service.findAllBySpecialization",
+            query = "Select c from Service c where c.specialization = :specialization")
 })
 public class Service extends AbstractEntity {
     
@@ -41,6 +43,10 @@ public class Service extends AbstractEntity {
         this.specialization = specialization;
     }
 
+    public void merge(Service service) {
+        this.title = service.title;
+    }
+    
     public String getTitle() {
         return title;
     }
