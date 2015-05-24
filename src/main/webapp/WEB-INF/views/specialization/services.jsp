@@ -7,6 +7,7 @@
 <layout:default title="${specialization.title}">
     
     <a href="${pageContext.request.contextPath}/service/new/${specialization.id}">Добавить услугу</a>
+    <a href="${pageContext.request.contextPath}/specializations">Специализации</a>
     <table class="table">
         <c:forEach var="service" items="${services}">
             <tr>
