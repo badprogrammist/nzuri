@@ -5,13 +5,10 @@
  */
 package ru.nzuri.services.profile;
 
-import ru.nzuri.domain.profile.ProfileSpecializationRelation;
-import ru.nzuri.domain.service.Specialization;
-
 /**
  *
  * @author bad
  */
-public interface ProfileSpecializationService {
-    public ProfileSpecializationRelation getProfileSpecializaion(Specialization specialization);
+public class DefaultProfileSpecializationService {
+    
 }
