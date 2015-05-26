@@ -5,11 +5,16 @@
  */
 package ru.nzuri.domain.profile;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import ru.nzuri.domain.AbstractEntity;
 import ru.nzuri.domain.service.Specialization;
@@ -33,6 +38,9 @@ public class ProfileSpecializationRelation extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "specialization_id")
     private Specialization specialization;
+    
+    @OneToMany(mappedBy = "profileSpecializationRelation",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<ProfileSpecializationServiceRelation> profileServices = new ArrayList<>();
 
     public ProfileSpecializationRelation(Profile profile, Specialization specialization) {
         this.profile = profile;
@@ -56,6 +64,14 @@ public class ProfileSpecializationRelation extends AbstractEntity {
 
     public void setSpecialization(Specialization specialization) {
         this.specialization = specialization;
+    }
+
+    public List<ProfileSpecializationServiceRelation> getProfileServices() {
+        return profileServices;
+    }
+
+    public void setProfileServices(List<ProfileSpecializationServiceRelation> profileServices) {
+        this.profileServices = profileServices;
     }
     
     

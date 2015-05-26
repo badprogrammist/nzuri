@@ -19,6 +19,7 @@ import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
 import ru.nzuri.domain.profile.Address;
 import ru.nzuri.domain.profile.Profile;
+import ru.nzuri.domain.profile.ProfileSpecializationRelation;
 import ru.nzuri.domain.service.Specialization;
 import ru.nzuri.domain.user.User;
 import ru.nzuri.security.AuthenticationService;
@@ -120,9 +121,9 @@ public class ProfileController {
         ModelAndView model = new ModelAndView();
         Profile profile = getCurrentUserProfile();
         if(profile != null) {
-            List<Specialization> specializations = specializationService.getAll();
+            List<ProfileSpecializationRelation> profileSpecializations = profile.getSpecializations();
             model.addObject("profile", profile);
-            model.addObject("specializations", specializations);
+            model.addObject("profileSpecializations", profileSpecializations);
             model.setViewName("profile/edit/services");
         } else {
             model.setViewName("404");

@@ -9,6 +9,6 @@ package ru.nzuri.services.profile;
  *
  * @author bad
  */
-public interface ProfileServiceService {
+public interface ProfileSpecializationService {
     
 }

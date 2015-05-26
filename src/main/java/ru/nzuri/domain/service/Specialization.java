@@ -32,7 +32,7 @@ public class Specialization extends AbstractEntity {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "specialization",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "specialization",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Service> services = new ArrayList<>();
     
     public Specialization() {

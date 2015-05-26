@@ -10,14 +10,10 @@
 
     <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/updateServices" >
 
-        <c:forEach items="${specializations}" var="specialization">
-            <p>${specialization.title}</p>
-            <c:forEach items="${specialization.services}" var="service">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="services"  value="${service.id}"/> ${service.title}
-                    </label>
-                </div>
+        <c:forEach items="${profileSpecializations}" var="profileSpecialization">
+            <p>${profileSpecialization.title}</p>
+            <c:forEach items="${profileSpecialization.profileServices}" var="profileService">
+                
             </c:forEach>
         </c:forEach>
 
