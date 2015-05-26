@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,7 +32,7 @@ public class Specialization extends AbstractEntity {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "specialization",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "specialization",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Service> services = new ArrayList<>();
     
     public Specialization() {

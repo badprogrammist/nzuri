@@ -5,6 +5,7 @@
  */
 package ru.nzuri.controllers.profile;
 
+import java.util.List;
 import javax.inject.Inject;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,12 @@ import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
 import ru.nzuri.domain.profile.Address;
 import ru.nzuri.domain.profile.Profile;
+import ru.nzuri.domain.service.Specialization;
 import ru.nzuri.domain.user.User;
 import ru.nzuri.security.AuthenticationService;
 import ru.nzuri.services.profile.ProfileService;
+import ru.nzuri.services.service.ServiceService;
+import ru.nzuri.services.service.SpecializationService;
 
 /**
  *
@@ -34,6 +38,12 @@ public class ProfileController {
 
     @Inject
     private AuthenticationService authenticationService;
+    
+    @Inject
+    private ServiceService serviceService;
+    
+    @Inject
+    private SpecializationService specializationService;
     
     @RequestMapping(value = "/masters", method = RequestMethod.GET)
     public ModelAndView masters() {
@@ -102,6 +112,33 @@ public class ProfileController {
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Адрес успешно обновлен!"));
         }
         return "redirect:/master/edit/address";
+    }
+    
+    @Secured("ROLE_MASTER")
+    @RequestMapping(value = "/master/edit/services", method = RequestMethod.GET)
+    public ModelAndView editServices() {
+        ModelAndView model = new ModelAndView();
+        Profile profile = getCurrentUserProfile();
+        if(profile != null) {
+            List<Specialization> specializations = specializationService.getAll();
+            model.addObject("profile", profile);
+            model.addObject("specializations", specializations);
+            model.setViewName("profile/edit/services");
+        } else {
+            model.setViewName("404");
+        }
+        return model;
+    }
+    
+    @Secured("ROLE_MASTER")
+    @RequestMapping(value = "/master/edit/updateServices", method = RequestMethod.POST)
+    public String updateServices(Long[] services, final RedirectAttributes redirectAttributes) {
+        Profile profile = getCurrentUserProfile();
+        if(profile != null) {
+            
+            redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Адрес успешно обновлен!"));
+        }
+        return "redirect:/master/edit/services";
     }
     
     private Profile getCurrentUserProfile() {
