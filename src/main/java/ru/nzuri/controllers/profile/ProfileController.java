@@ -143,6 +143,7 @@ public class ProfileController {
             model.addObject("profile", profile);
             model.addObject("profileSpecializations", profileSpecializations);
             model.addObject("specializations", specializations);
+            model.addObject("servicesUpdateContainer", new ProfileServiceUpdateContainer());
             model.setViewName("profile/edit/services");
         } else {
             model.setViewName("404");
@@ -152,7 +153,7 @@ public class ProfileController {
     
     @Secured("ROLE_MASTER")
     @RequestMapping(value = "/master/edit/updateServices", method = RequestMethod.POST)
-    public String updateServices(@ModelAttribute("servicesUpdateData") ProfileServiceUpdateDTO[] servicesUpdateData, final RedirectAttributes redirectAttributes) {
+    public String updateServices(@ModelAttribute("servicesUpdateContainer") ProfileServiceUpdateContainer servicesUpdateContainer, final RedirectAttributes redirectAttributes) {
         Profile profile = getCurrentUserProfile();
         if(profile != null) {
             

@@ -8,14 +8,15 @@
 
     <profile:tabMenu activeTab="services"/>
 
-    <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/updateServices" modelAttribute="servicesUpdateData" >
-
+    <form:form class="form-horizontal" role="form" method="post"  action="${pageContext.request.contextPath}/master/edit/updateServices" modelAttribute="servicesUpdateContainer" >
+        <c:set var="count" value="${0}"/>
         <c:forEach items="${profileSpecializations}" var="profileSpecialization">
             <p>${profileSpecialization.specialization.title}</p>
-            <c:forEach items="${profileSpecialization.profileServices}" var="profileService">
+            <c:forEach items="${profileSpecialization.profileServices}" var="profileService" varStatus="status">
                 <label>${profileService.service.title}</label>
-                <form:input path="price" value="${profileService.price.value}" />
-                <form:hidden path="serviceId" value="${profileService.service.id}"/>
+                <form:input path="services[${count}].price.value" value="${profileService.price.value}" />
+                <form:hidden path="services[${count}].service.id" value="${profileService.service.id}"/>
+                <c:set var="count" value="${count+1}"/>
             </c:forEach>
         </c:forEach>
 
