@@ -19,7 +19,7 @@ import org.eclipse.persistence.annotations.Cache;
  */
 @Cache
 @MappedSuperclass
-public class AbstractEntity implements Serializable {
+public abstract class AbstractEntity<E extends AbstractEntity> implements Serializable {
     
     @Id
     @GeneratedValue
@@ -28,7 +28,8 @@ public class AbstractEntity implements Serializable {
 
     public AbstractEntity() {
     }
-
+    
+    public abstract void merge(E entity);
     
     public Long getId() {
         return id;

@@ -22,7 +22,7 @@ import ru.nzuri.domain.AbstractEntity;
             query = "Select c from Role c"),
     @NamedQuery(name = "Role.findByName",
             query = "Select c from Role c where c.name = :name")})
-public class Role extends AbstractEntity {
+public class Role extends AbstractEntity<Role> {
     
     @Column(name = "name",unique = true)
     private String name;
@@ -40,6 +40,11 @@ public class Role extends AbstractEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void merge(Role entity) {
+        this.name = entity.getName();
     }
     
     

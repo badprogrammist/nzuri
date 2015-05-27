@@ -18,10 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
-import ru.nzuri.domain.service.Service;
-import ru.nzuri.domain.service.Specialization;
-import ru.nzuri.services.service.ServiceService;
-import ru.nzuri.services.service.SpecializationService;
+import ru.nzuri.domain.action.Action;
+import ru.nzuri.domain.action.Specialization;
+import ru.nzuri.services.action.ActionService;
+import ru.nzuri.services.action.SpecializationService;
 
 /**
  *
@@ -34,16 +34,16 @@ public class SpecializationController {
     private SpecializationService specializationService;
     
     @Inject
-    private ServiceService serviceService;
+    private ActionService serviceService;
     
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/specialization/services/{id}", method = RequestMethod.GET)
     public ModelAndView services(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
         Specialization specialization = specializationService.get(id);
-        List<Service> services = Collections.emptyList();
+        List<Action> services = Collections.emptyList();
         if(specialization != null) {
-            services = serviceService.getServices(specialization);
+            services = serviceService.getAll(specialization);
             mav.addObject("specialization", specialization);
         }
         mav.addObject("services", services);

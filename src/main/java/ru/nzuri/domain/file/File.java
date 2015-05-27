@@ -24,7 +24,7 @@ import ru.nzuri.domain.AbstractEntity;
             query = "Select c from File c")
 })
 @JsonIgnoreProperties({"source"}) 
-public class File extends AbstractEntity {
+public class File extends AbstractEntity<File> {
     
     public static final String DEFAULT_FILENAME = "noname";
     public static final String DEFAULT_IMAGE_FORMAT = "jpg";
@@ -71,6 +71,13 @@ public class File extends AbstractEntity {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    @Override
+    public void merge(File entity) {
+        this.source = entity.getSource();
+        this.fileName = entity.getFileName();
+        this.contentType = entity.getContentType();
     }
     
     

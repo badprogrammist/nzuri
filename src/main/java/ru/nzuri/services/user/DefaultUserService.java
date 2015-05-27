@@ -15,7 +15,7 @@ import ru.nzuri.domain.user.User;
 import ru.nzuri.domain.user.UserCredential;
 import ru.nzuri.domain.user.UserData;
 import ru.nzuri.domain.user.UserRepository;
-import ru.nzuri.domain.user.UserRoleRelation;
+import ru.nzuri.domain.user.UserRole;
 import ru.nzuri.services.AbstractService;
 
 /**
@@ -35,7 +35,7 @@ public class DefaultUserService extends AbstractService<User> implements UserSer
     @Override
     public void registerNewUser(UserCredential credential, UserData data, Role role) {
         User user = new User(credential,data);
-        UserRoleRelation roleRelation = new UserRoleRelation(user, role);
+        UserRole roleRelation = new UserRole(user, role);
         user.getRoles().add(roleRelation);
         userRepository.store(user);
     }

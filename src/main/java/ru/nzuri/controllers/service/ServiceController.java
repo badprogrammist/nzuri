@@ -16,10 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
-import ru.nzuri.domain.service.Service;
-import ru.nzuri.domain.service.Specialization;
-import ru.nzuri.services.service.ServiceService;
-import ru.nzuri.services.service.SpecializationService;
+import ru.nzuri.domain.action.Action;
+import ru.nzuri.domain.action.Specialization;
+import ru.nzuri.services.action.ActionService;
+import ru.nzuri.services.action.SpecializationService;
 
 /**
  *
@@ -29,7 +29,7 @@ import ru.nzuri.services.service.SpecializationService;
 public class ServiceController {
 
     @Inject
-    private ServiceService serviceService;
+    private ActionService serviceService;
 
     @Inject
     private SpecializationService specializationService;
@@ -52,7 +52,7 @@ public class ServiceController {
 
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/service/save/{id}", method = RequestMethod.POST)
-    public String save(@ModelAttribute("service") Service service, @PathVariable Long id, final RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute("service") Action service, @PathVariable Long id, final RedirectAttributes redirectAttributes) {
         if (service != null && id != null) {
             Specialization specialization = specializationService.get(id);
             if (specialization != null) {
@@ -73,7 +73,7 @@ public class ServiceController {
     @RequestMapping(value = "/service/edit/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
-        Service service = serviceService.get(id);
+        Action service = serviceService.get(id);
         mav.addObject("service", service);
         mav.setViewName("service/edit");
         return mav;
@@ -81,7 +81,7 @@ public class ServiceController {
 
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/service/update", method = RequestMethod.POST)
-    public String update(@ModelAttribute("service") Service service, Long specializationId, final RedirectAttributes redirectAttributes) {
+    public String update(@ModelAttribute("service") Action service, Long specializationId, final RedirectAttributes redirectAttributes) {
         if (service != null) {
             serviceService.update(service);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Сохранение выполнено успешно"));

@@ -16,37 +16,49 @@ import ru.nzuri.domain.EntityRepository;
  */
 @Transactional
 public abstract class AbstractService<E extends AbstractEntity> implements EntityService<E> {
-    
+
     protected abstract EntityRepository<E> getRepository();
 
     @Override
     public void store(E entity) {
         getRepository().store(entity);
     }
-    
+
     @Override
     public E update(E entity) {
         return getRepository().update(entity);
     }
-    
+
+    @Override
+    public E merge(E entity) {
+        if (entity != null && entity.getId() != null) {
+            E old = get(entity.getId());
+            if (old != null) {
+                old.merge(entity);
+                return getRepository().update(old);
+            }
+        }
+        return entity;
+    }
+
     @Override
     public List<E> getAll() {
         return getRepository().getAll();
     }
-    
+
     @Override
     public E get(Long id) {
-        return (E)getRepository().get(id);
+        return (E) getRepository().get(id);
     }
-    
+
     @Override
     public void remove(Long id) {
         E entity = get(id);
-        if(entity != null) {
+        if (entity != null) {
             remove(entity);
         }
     }
-    
+
     @Override
     public void remove(E entity) {
         getRepository().remove(entity);

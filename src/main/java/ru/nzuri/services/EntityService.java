@@ -18,6 +18,8 @@ public interface EntityService<E extends AbstractEntity> {
     
     public E update(E entity);
     
+    public E merge(E entity);
+    
     public List<E> getAll();
     
     public E get(Long id);

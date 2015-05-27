@@ -32,7 +32,7 @@ import ru.nzuri.domain.AbstractEntity;
     @NamedQuery(name = "User.findByLogin",
             query = "Select c from User c where c.credential.login = :login")
 })
-public class User extends AbstractEntity implements UserDetails {
+public class User extends AbstractEntity<User> implements UserDetails {
 
     public static final User NULL = new User(
             new UserCredential("NULL", "NULL"),
@@ -45,7 +45,7 @@ public class User extends AbstractEntity implements UserDetails {
     private UserData userData;
     
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserRoleRelation> roles = new HashSet<>();
+    private Set<UserRole> roles = new HashSet<>();
 
     public User() {
     }
@@ -73,7 +73,7 @@ public class User extends AbstractEntity implements UserDetails {
             return Collections.emptyList();
         }
         Set<GrantedAuthority> authorities = new HashSet<>();
-        for (UserRoleRelation roleRelation : roles) {
+        for (UserRole roleRelation : roles) {
             authorities.add(new SimpleGrantedAuthority(roleRelation.getRole().getName()));
         }
         return authorities;
@@ -109,11 +109,11 @@ public class User extends AbstractEntity implements UserDetails {
         return true;
     }
     
-     public Set<UserRoleRelation> getRoles() {
+     public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<UserRoleRelation> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 
@@ -123,6 +123,12 @@ public class User extends AbstractEntity implements UserDetails {
 
     public void setUserData(UserData userData) {
         this.userData = userData;
+    }
+
+    @Override
+    public void merge(User entity) {
+        this.userData = entity.getUserData();
+        this.credential = entity.getCredential();
     }
     
 }

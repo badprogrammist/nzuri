@@ -10,12 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.nzuri.controllers.profile.ProfileController;
-import ru.nzuri.domain.profile.Profile;
+import ru.nzuri.controllers.master.MasterController;
+import ru.nzuri.domain.master.Master;
 import ru.nzuri.domain.user.Roles;
 import ru.nzuri.domain.user.User;
 import ru.nzuri.security.AuthenticationService;
-import ru.nzuri.services.profile.ProfileService;
+import ru.nzuri.services.master.MasterService;
 
 /**
  * @author bad
@@ -27,7 +27,7 @@ public class AppController {
     private AuthenticationService authenticationService;
 
     @Inject
-    private ProfileService profileService;
+    private MasterService profileService;
 
     @RequestMapping(value = "/", method = {RequestMethod.GET})
     public ModelAndView index() {
@@ -35,8 +35,8 @@ public class AppController {
         if (authenticationService.isAuthenticated()) {
             if (authenticationService.hasRole(Roles.ROLE_MASTER.name())) {
                 User user = authenticationService.getPrincipal();
-                Profile profile =profileService.getProfile(user);
-                model = ProfileController.prepareView(profile,user);
+                Master profile =profileService.get(user);
+                model = MasterController.prepareView(profile,user);
             }
             if (authenticationService.hasRole(Roles.ROLE_ADMIN.name())) {
                 model.setViewName("index");
