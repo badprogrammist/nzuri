@@ -20,7 +20,6 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <title>${title}</title>
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/knockout/knockout.min.js"></script>
     </head>
     <body>
         <jsp:directive.include  file="/WEB-INF/tags/partials/default-header.tag"/>
@@ -30,7 +29,6 @@
         </div>
 
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
-        
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/picedit/picedit.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/dropzone/dropzone.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
