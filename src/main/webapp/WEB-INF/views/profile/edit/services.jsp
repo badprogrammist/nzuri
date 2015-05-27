@@ -8,43 +8,54 @@
 
     <profile:tabMenu activeTab="services"/>
 
-    <form:form class="form-horizontal" role="form" method="post"  action="${pageContext.request.contextPath}/master/edit/updateServices" modelAttribute="servicesUpdateContainer" >
-        <c:set var="count" value="${0}"/>
-        <c:forEach items="${profileSpecializations}" var="profileSpecialization">
-            <p>${profileSpecialization.specialization.title}</p>
-            <c:forEach items="${profileSpecialization.profileServices}" var="profileService" varStatus="status">
-                <label>${profileService.service.title}</label>
-                <form:input path="services[${count}].price.value" value="${profileService.price.value}" />
-                <form:hidden path="services[${count}].service.id" value="${profileService.service.id}"/>
-                <c:set var="count" value="${count+1}"/>
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Услуги</h3>
+            <c:forEach items="${profileSpecializations}" var="profileSpecialization">
+                <p>${profileSpecialization.specialization.title}</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Услуга</th>
+                            <th>Цена</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${profileSpecialization.profileServices}" var="profileService" varStatus="status">
+                            <tr>
+                                <td><a href="#">${profileService.service.title}</a></td>
+                                <td>${profileService.price.value}</td>
+                                <td>
+                                    <a href="#">Удалить</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
             </c:forEach>
-        </c:forEach>
-
-        <div class="form-group last">
-            <div class="col-sm-offset-3 col-sm-6">
-                <button type="submit" class="btn btn-success btn-sm">Сохранить</button>
-            </div>
         </div>
-    </form:form>
-    
-    <form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/attachServices" >
+        <div class="col-sm-6">
+            <h3>Другие услуги</h3>
+            <form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/attachServices" >
+                <c:forEach items="${specializations}" var="specialization">
+                    <p>${specialization.title}</p>
+                    <c:forEach items="${specialization.services}" var="service">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="services"  value="${service.id}"/> ${service.title}
+                            </label>
+                        </div>
+                    </c:forEach>
+                </c:forEach>
 
-        <c:forEach items="${specializations}" var="specialization">
-            <p>${specialization.title}</p>
-            <c:forEach items="${specialization.services}" var="service">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="services"  value="${service.id}"/> ${service.title}
-                    </label>
+                <div class="form-group last">
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-success btn-sm">Добавить</button>
+                    </div>
                 </div>
-            </c:forEach>
-        </c:forEach>
-
-        <div class="form-group last">
-            <div class="col-sm-offset-3 col-sm-6">
-                <button type="submit" class="btn btn-success btn-sm">Добавить</button>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 
 </layout:default>
