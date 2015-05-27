@@ -24,7 +24,9 @@ import ru.nzuri.domain.service.Service;
 @Table(name = "profile_specialization_service_relations")
 @NamedQueries({
     @NamedQuery(name = "ProfileSpecializationServiceRelation.findAll",
-            query = "Select c from ProfileSpecializationServiceRelation c")
+            query = "Select c from ProfileSpecializationServiceRelation c"),
+    @NamedQuery(name = "ProfileSpecializationServiceRelation.findByServiceAndProfile",
+            query = "Select c from ProfileSpecializationServiceRelation c where c.profileSpecializationRelation.profile = :profile and c.service = :service")
 })
 public class ProfileSpecializationServiceRelation extends AbstractEntity {
     
@@ -47,6 +49,10 @@ public class ProfileSpecializationServiceRelation extends AbstractEntity {
     public ProfileSpecializationServiceRelation() {
     }
 
+    public void merge(ProfileSpecializationServiceRelation profileSpecializationService) {
+        this.price = profileSpecializationService.getPrice();
+    }
+    
     public ProfileSpecializationRelation getProfileSpecializationRelation() {
         return profileSpecializationRelation;
     }

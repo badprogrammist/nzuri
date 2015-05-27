@@ -29,6 +29,7 @@
         </div>
 
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/eldarion-ajax.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/picedit/picedit.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/dropzone/dropzone.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>

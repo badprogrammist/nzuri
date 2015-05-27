@@ -5,8 +5,6 @@
  */
 package ru.nzuri.controllers.profile;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -20,10 +18,6 @@ import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
 import ru.nzuri.domain.profile.Address;
 import ru.nzuri.domain.profile.Profile;
-import ru.nzuri.domain.profile.ProfileSpecializationRelation;
-import ru.nzuri.domain.profile.ProfileSpecializationServiceRelation;
-import ru.nzuri.domain.service.Service;
-import ru.nzuri.domain.service.Specialization;
 import ru.nzuri.domain.user.User;
 import ru.nzuri.security.AuthenticationService;
 import ru.nzuri.services.profile.ProfileService;
@@ -116,88 +110,6 @@ public class ProfileController {
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Адрес успешно обновлен!"));
         }
         return "redirect:/master/edit/address";
-    }
-    
-    @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/services", method = RequestMethod.GET)
-    public ModelAndView editServices() {
-        ModelAndView model = new ModelAndView();
-        Profile profile = getCurrentUserProfile();
-        if(profile != null) {
-            List<ProfileSpecializationRelation> profileSpecializations = profile.getSpecializations();
-            List<Specialization> specializations = specializationService.getAll();
-            for(Specialization specialization : specializations) {
-                List<Service> toRemove = new ArrayList<>();
-                for(Service service : specialization.getServices()) {
-                    
-                    for(ProfileSpecializationRelation profileSpecialization : profileSpecializations) {
-                        for(ProfileSpecializationServiceRelation profileService : profileSpecialization.getProfileServices()) {
-                            if(profileService.getService().equals(service)) {
-                                toRemove.add(service);
-                            }
-                        }
-                    }
-                }
-                specialization.getServices().removeAll(toRemove);
-            }
-            model.addObject("profile", profile);
-            model.addObject("profileSpecializations", profileSpecializations);
-            model.addObject("specializations", specializations);
-            model.addObject("servicesUpdateContainer", new ProfileServiceUpdateContainer());
-            model.setViewName("profile/edit/services");
-        } else {
-            model.setViewName("404");
-        }
-        return model;
-    }
-    
-    @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/updateServices", method = RequestMethod.POST)
-    public String updateServices(@ModelAttribute("servicesUpdateContainer") ProfileServiceUpdateContainer servicesUpdateContainer, final RedirectAttributes redirectAttributes) {
-        Profile profile = getCurrentUserProfile();
-        if(profile != null) {
-            
-            redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Адрес успешно обновлен!"));
-        }
-        return "redirect:/master/edit/services";
-    }
-    
-    @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/attachServices", method = RequestMethod.POST)
-    public String attachServices(Long[] services, final RedirectAttributes redirectAttributes) {
-        Profile profile = getCurrentUserProfile();
-        if(profile != null) {
-            for(Long serviceId : services) {
-                Service service = serviceService.get(serviceId);
-                if(service != null) {
-                    ProfileSpecializationRelation profileSpecialization = null;
-                    for(ProfileSpecializationRelation profileSpecializationCandidate : profile.getSpecializations()) {
-                        if(profileSpecializationCandidate.getSpecialization().equals(service.getSpecialization())) {
-                            profileSpecialization = profileSpecializationCandidate;
-                            break;
-                        }
-                    }
-                    if(profileSpecialization == null) {
-                        profileSpecialization = new ProfileSpecializationRelation(profile, service.getSpecialization());
-                        profile.getSpecializations().add(profileSpecialization);
-                    }
-                    boolean exist = false;
-                    for(ProfileSpecializationServiceRelation profileSpecializationService : profileSpecialization.getProfileServices()) {
-                        if(profileSpecializationService.getService().equals(service)) {
-                            exist = true;
-                            break;
-                        }
-                    }
-                    if(!exist) {
-                        ProfileSpecializationServiceRelation profileSpecializationService = new ProfileSpecializationServiceRelation(profileSpecialization, service);
-                        profileSpecialization.getProfileServices().add(profileSpecializationService);
-                    }
-                }
-            }
-            profileService.update(profile);
-            redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуги успешно прикрепленны!"));
-        }
-        return "redirect:/master/edit/services";
     }
     
     private Profile getCurrentUserProfile() {

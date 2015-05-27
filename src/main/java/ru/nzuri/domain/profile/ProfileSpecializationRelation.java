@@ -26,20 +26,24 @@ import ru.nzuri.domain.service.Specialization;
 @Entity
 @Table(name = "profile_specialization_relations")
 @NamedQueries({
-    @NamedQuery(name = "ProfileSpecializationRelation.findAll",
-            query = "Select c from ProfileSpecializationRelation c")
+    @NamedQuery(
+            name = "ProfileSpecializationRelation.findAll",
+            query = "Select c from ProfileSpecializationRelation c"),
+    @NamedQuery(
+            name = "ProfileSpecializationRelation.findByProfileAndSpecialization",
+            query = "Select c from ProfileSpecializationRelation c where c.profile = :profile and c.specialization = :specialization")
 })
 public class ProfileSpecializationRelation extends AbstractEntity {
-    
+
     @ManyToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;
-    
+
     @ManyToOne
     @JoinColumn(name = "specialization_id")
     private Specialization specialization;
-    
-    @OneToMany(mappedBy = "profileSpecializationRelation",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "profileSpecializationRelation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<ProfileSpecializationServiceRelation> profileServices = new ArrayList<>();
 
     public ProfileSpecializationRelation(Profile profile, Specialization specialization) {
@@ -73,7 +77,5 @@ public class ProfileSpecializationRelation extends AbstractEntity {
     public void setProfileServices(List<ProfileSpecializationServiceRelation> profileServices) {
         this.profileServices = profileServices;
     }
-    
-    
-    
+
 }

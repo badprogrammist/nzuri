@@ -19,6 +19,7 @@
                             <th>Услуга</th>
                             <th>Цена</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,6 +27,9 @@
                             <tr>
                                 <td><a href="#">${profileService.service.title}</a></td>
                                 <td>${profileService.price.value}</td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/master/service/edit/${profileService.id}">Редактировать</a>
+                                </td>
                                 <td>
                                     <a href="#">Удалить</a>
                                 </td>
