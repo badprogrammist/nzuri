@@ -47,7 +47,7 @@ public class Master extends AbstractEntity<Master> {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Example> examples = new ArrayList<>();
 
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)

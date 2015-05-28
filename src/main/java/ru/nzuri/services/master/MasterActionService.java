@@ -17,6 +17,6 @@ import ru.nzuri.services.EntityService;
  * @author bad
  */
 public interface MasterActionService extends EntityService<MasterAction> {
-    public MasterSpecialization getMasterSpecializaion(Master profile, Specialization specialization);
-    public MasterAction get(Master profile, Action service);
+    public MasterSpecialization getMasterSpecializaion(Master master, Specialization specialization);
+    public MasterAction get(Master master, Action service);
 }

@@ -101,7 +101,7 @@ public class MasterController {
     }
     
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/updateAddress", method = RequestMethod.POST)
+    @RequestMapping(value = "/master/edit/address/update", method = RequestMethod.POST)
     public String updateAddress(@ModelAttribute("address") Address address,final RedirectAttributes redirectAttributes) {
         Master master = getCurrentMaster();
         if(master != null) {

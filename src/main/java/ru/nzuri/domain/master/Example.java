@@ -40,8 +40,8 @@ public class Example extends AbstractEntity<Example> {
     @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
-    public Example(Master profile, File image, String comment) {
-        this.master = profile;
+    public Example(Master master, File image, String comment) {
+        this.master = master;
         this.image = image;
         this.comment = comment;
     }

@@ -50,7 +50,7 @@ public class MasterActionRepositoryJPA extends AbstractRepositoryJPA<MasterActio
     @Override
     public MasterAction find(Master master, Action action) {
         try {
-            return getEntityManager().createNamedQuery("MasterAction.findByServiceAndMaster", MasterAction.class)
+            return getEntityManager().createNamedQuery("MasterAction.findByActionAndMaster", MasterAction.class)
                     .setParameter("action", action)
                     .setParameter("master", master)
                     .getSingleResult();

@@ -6,17 +6,17 @@
 <%@taglib prefix="specialization" tagdir="/WEB-INF/tags/specialization" %>
 <layout:default title="${specialization.title}">
     
-    <a href="${pageContext.request.contextPath}/service/new/${specialization.id}">Добавить услугу</a>
+    <a href="${pageContext.request.contextPath}/action/new/${specialization.id}">Добавить услугу</a>
     <a href="${pageContext.request.contextPath}/specializations">Специализации</a>
     <table class="table">
-        <c:forEach var="service" items="${services}">
+        <c:forEach var="action" items="${actions}">
             <tr>
-                <td>${service.title}</td>
+                <td>${action.title}</td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/service/edit/${service.id}">Редактировать</a>
+                    <a href="${pageContext.request.contextPath}/action/edit/${action.id}">Редактировать</a>
                 </td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/service/remove/${service.id}" method="POST">
+                    <form action="${pageContext.request.contextPath}/action/remove/${action.id}" method="POST">
                         <input type="hidden" name="specializationId" value="${specialization.id}"/>
                         <button class="btn bg-primary btn-sm" type="submit">Удалить</button>
                     </form>

@@ -3,21 +3,21 @@
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="profile" tagdir="/WEB-INF/tags/profile" %>
+<%@taglib prefix="master" tagdir="/WEB-INF/tags/master" %>
 <layout:default title="Профиль">
 
-    <profile:tabMenu activeTab="services"/>
+    <master:tabMenu activeTab="actions"/>
 
     <div class="row">
         <div class="col-sm-6">
-            <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/updateService" modelAttribute="profileService" >
+            <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/action/update" modelAttribute="masterAction" >
                 <div class="form-group">
                     <label for="price" class="col-sm-3 control-label">Цена</label>
                     <div class="col-sm-6">
-                        <form:input id="flat" value="${profileService.price.value}" path="price.value" type="text" class="form-control"  placeholder="Введите цену"/>
+                        <form:input id="flat" value="${masterAction.price.value}" path="price.value" type="text" class="form-control"  placeholder="Введите цену"/>
                     </div>
                 </div>
-                <form:hidden path="id" value="${profileService.id}"/>
+                <form:hidden path="id" value="${masterAction.id}"/>
                 <div class="form-group last">
                     <div class="col-sm-offset-3 col-sm-6">
                         <button type="submit" class="btn btn-success btn-sm btn-block">Сохранить</button>

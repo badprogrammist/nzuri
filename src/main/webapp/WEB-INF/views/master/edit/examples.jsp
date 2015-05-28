@@ -2,13 +2,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
-<%@taglib prefix="profile" tagdir="/WEB-INF/tags/profile" %>
+<%@taglib prefix="master" tagdir="/WEB-INF/tags/master" %>
 <layout:default title="Профиль">
 
-    <profile:tabMenu activeTab="examples"/>
+    <master:tabMenu activeTab="examples"/>
     
     <div id="examples" class="row">
-        <c:forEach var="exampleItem" items="${profile.examples}">
+        <c:forEach var="exampleItem" items="${master.examples}">
             <div class="col-xs-6 col-md-3">
                 <a href="#" class="thumbnail">
                     <common:image fileId="${exampleItem.image.id}"/>
@@ -18,7 +18,7 @@
     </div>
 
     <div class="row">
-        <form action="${pageContext.request.contextPath}/profile/example/upload" class="dropzone" enctype="multipart/form-data">
+        <form action="${pageContext.request.contextPath}/master/example/upload" class="dropzone" enctype="multipart/form-data">
             <div class="fallback col-xs-12">
                 <input name="file" type="file" multiple/>
             </div>

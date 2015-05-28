@@ -53,7 +53,7 @@ public class MasterActionController {
     private MasterActionService masterActionService;
 
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/services", method = RequestMethod.GET)
+    @RequestMapping(value = "/master/edit/actions", method = RequestMethod.GET)
     public ModelAndView editActions() {
         ModelAndView model = new ModelAndView();
         Master master = getCurrentMaster();
@@ -64,7 +64,7 @@ public class MasterActionController {
                 List<Action> toRemove = new ArrayList<>();
                 specialization.getActions().stream().forEach((action) -> {
                     masterSpecializations.stream().forEach((masterSpecialization) -> {
-                        masterSpecialization.getMasterActions().stream().filter((profileService) -> (profileService.getAction().equals(action))).forEach((_item) -> {
+                        masterSpecialization.getMasterActions().stream().filter((masterAction) -> (masterAction.getAction().equals(action))).forEach((_item) -> {
                             toRemove.add(action);
                         });
                     });
@@ -74,7 +74,7 @@ public class MasterActionController {
             model.addObject("master", master);
             model.addObject("masterSpecializations", masterSpecializations);
             model.addObject("specializations", specializations);
-            model.setViewName("master/edit/services");
+            model.setViewName("master/edit/actions");
         } else {
             model.setViewName("404");
         }
@@ -82,61 +82,61 @@ public class MasterActionController {
     }
     
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/service/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/master/edit/action/update", method = RequestMethod.POST)
     public String updateService(@ModelAttribute("masterAction") MasterAction masterAction, final RedirectAttributes redirectAttributes) {
         Master master = getCurrentMaster();
         if(master != null) {
             masterActionService.merge(masterAction);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуга успешна обновлен!"));
         }
-        return "redirect:/master/edit/services";
+        return "redirect:/master/edit/actions";
     }
     
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/service/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView profileServiceEdit(@PathVariable Long id) {
+    @RequestMapping(value = "/master/action/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView masterActionEdit(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("profileService", masterActionService.getProfileService(id));
-        mav.setViewName("profile/edit/profileServiceEdit");
+        mav.addObject("masterAction", masterActionService.get(id));
+        mav.setViewName("master/edit/masterActionEdit");
         return mav;
     }
     
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/attachServices", method = RequestMethod.POST)
-    public String attachServices(Long[] services, final RedirectAttributes redirectAttributes) {
-        Master profile = getCurrentMaster();
-        if(profile != null) {
-            for(Long serviceId : services) {
-                Action service = actionService.get(serviceId);
-                if(service != null) {
-                    MasterSpecialization profileSpecialization = null;
-                    for(MasterSpecialization profileSpecializationCandidate : profile.getSpecializations()) {
-                        if(profileSpecializationCandidate.getSpecialization().equals(service.getSpecialization())) {
-                            profileSpecialization = profileSpecializationCandidate;
+    @RequestMapping(value = "/master/edit/action/attach", method = RequestMethod.POST)
+    public String attachServices(Long[] actions, final RedirectAttributes redirectAttributes) {
+        Master master = getCurrentMaster();
+        if(master != null) {
+            for(Long actionId : actions) {
+                Action action = actionService.get(actionId);
+                if(action != null) {
+                    MasterSpecialization masterSpecialization = null;
+                    for(MasterSpecialization ms : master.getSpecializations()) {
+                        if(ms.getSpecialization().equals(action.getSpecialization())) {
+                            masterSpecialization = ms;
                             break;
                         }
                     }
-                    if(profileSpecialization == null) {
-                        profileSpecialization = new MasterSpecialization(profile, service.getSpecialization());
-                        profile.getSpecializations().add(profileSpecialization);
+                    if(masterSpecialization == null) {
+                        masterSpecialization = new MasterSpecialization(master, action.getSpecialization());
+                        master.getSpecializations().add(masterSpecialization);
                     }
                     boolean exist = false;
-                    for(MasterAction profileSpecializationService : profileSpecialization.getMasterActions()) {
-                        if(profileSpecializationService.getAction().equals(service)) {
+                    for(MasterAction masterAction : masterSpecialization.getMasterActions()) {
+                        if(masterAction.getAction().equals(action)) {
                             exist = true;
                             break;
                         }
                     }
                     if(!exist) {
-                        MasterAction profileSpecializationService = new MasterAction(profileSpecialization, service);
-                        profileSpecialization.getMasterActions().add(profileSpecializationService);
+                        MasterAction masterAction = new MasterAction(masterSpecialization, action);
+                        masterSpecialization.getMasterActions().add(masterAction);
                     }
                 }
             }
-            masterService.update(profile);
+            masterService.update(master);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуги успешно прикрепленны!"));
         }
-        return "redirect:/master/edit/services";
+        return "redirect:/master/edit/actions";
     }
     
     private Master getCurrentMaster() {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.nzuri.controllers.service;
+package ru.nzuri.controllers.action;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,20 +34,20 @@ public class SpecializationController {
     private SpecializationService specializationService;
     
     @Inject
-    private ActionService serviceService;
+    private ActionService actionService;
     
     @Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/specialization/services/{id}", method = RequestMethod.GET)
-    public ModelAndView services(@PathVariable Long id) {
+    @RequestMapping(value = "/specialization/actions/{id}", method = RequestMethod.GET)
+    public ModelAndView actions(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
         Specialization specialization = specializationService.get(id);
-        List<Action> services = Collections.emptyList();
+        List<Action> actions = Collections.emptyList();
         if(specialization != null) {
-            services = serviceService.getAll(specialization);
+            actions = actionService.getAll(specialization);
             mav.addObject("specialization", specialization);
         }
-        mav.addObject("services", services);
-        mav.setViewName("specialization/services");
+        mav.addObject("actions", actions);
+        mav.setViewName("specialization/actions");
         return mav;
     }
     
@@ -94,7 +94,7 @@ public class SpecializationController {
     @RequestMapping(value = "/specialization/update", method = RequestMethod.POST)
     public String update(@ModelAttribute("specialization") Specialization specialization,final RedirectAttributes redirectAttributes) {
         if(specialization != null) {
-            specializationService.update(specialization);
+            specializationService.merge(specialization);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Сохранение выполнено успешно"));
             return "redirect:/specializations";
         } else {

@@ -27,12 +27,12 @@ public class DefaultMasterService extends AbstractService<Master> implements Mas
     
     @Override
     public Master get(User user) {
-        Master profile = masterRepository.findByUser(user);
-        if(profile.equals(Master.NULL)) {
-            profile = new Master(user);
-            store(profile);
+        Master master = masterRepository.findByUser(user);
+        if(master.equals(Master.NULL)) {
+            master = new Master(user);
+            store(master);
         }
-        return profile;
+        return master;
     }
 
     

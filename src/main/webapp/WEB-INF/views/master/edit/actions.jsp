@@ -3,16 +3,16 @@
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="profile" tagdir="/WEB-INF/tags/profile" %>
+<%@taglib prefix="master" tagdir="/WEB-INF/tags/master" %>
 <layout:default title="Профиль">
 
-    <profile:tabMenu activeTab="services"/>
+    <master:tabMenu activeTab="actions"/>
 
     <div class="row">
         <div class="col-sm-6">
             <h3>Услуги</h3>
-            <c:forEach items="${profileSpecializations}" var="profileSpecialization">
-                <p>${profileSpecialization.specialization.title}</p>
+            <c:forEach items="${masterSpecializations}" var="masterSpecialization">
+                <p>${masterSpecialization.specialization.title}</p>
                 <table class="table">
                     <thead>
                         <tr>
@@ -23,12 +23,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${profileSpecialization.profileServices}" var="profileService" varStatus="status">
+                        <c:forEach items="${masterSpecialization.masterActions}" var="masterAction" varStatus="status">
                             <tr>
-                                <td><a href="#">${profileService.service.title}</a></td>
-                                <td>${profileService.price.value}</td>
+                                <td><a href="#">${masterAction.action.title}</a></td>
+                                <td>${masterAction.price.value}</td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/master/service/edit/${profileService.id}">Редактировать</a>
+                                    <a href="${pageContext.request.contextPath}/master/action/edit/${masterAction.id}">Редактировать</a>
                                 </td>
                                 <td>
                                     <a href="#">Удалить</a>
@@ -41,13 +41,13 @@
         </div>
         <div class="col-sm-6">
             <h3>Другие услуги</h3>
-            <form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/attachServices" >
+            <form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/action/attach" >
                 <c:forEach items="${specializations}" var="specialization">
                     <p>${specialization.title}</p>
-                    <c:forEach items="${specialization.services}" var="service">
+                    <c:forEach items="${specialization.actions}" var="action">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="services"  value="${service.id}"/> ${service.title}
+                                <input type="checkbox" name="actions"  value="${action.id}"/> ${action.title}
                             </label>
                         </div>
                     </c:forEach>

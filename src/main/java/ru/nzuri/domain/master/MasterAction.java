@@ -25,7 +25,7 @@ import ru.nzuri.domain.action.Action;
 @NamedQueries({
     @NamedQuery(name = "MasterAction.findAll",
             query = "Select c from MasterAction c"),
-    @NamedQuery(name = "MasterAction.findByServiceAndMaster",
+    @NamedQuery(name = "MasterAction.findByActionAndMaster",
             query = "Select c from MasterAction c where c.masterSpecialization.master = :master and c.action = :action")
 })
 public class MasterAction extends AbstractEntity<MasterAction> {

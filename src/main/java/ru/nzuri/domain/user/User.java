@@ -73,8 +73,8 @@ public class User extends AbstractEntity<User> implements UserDetails {
             return Collections.emptyList();
         }
         Set<GrantedAuthority> authorities = new HashSet<>();
-        for (UserRole roleRelation : roles) {
-            authorities.add(new SimpleGrantedAuthority(roleRelation.getRole().getName()));
+        for (UserRole userRole : roles) {
+            authorities.add(new SimpleGrantedAuthority(userRole.getRole().getName()));
         }
         return authorities;
     }

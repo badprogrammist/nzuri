@@ -3,12 +3,12 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
-<%@taglib prefix="profile" tagdir="/WEB-INF/tags/profile" %>
+<%@taglib prefix="master" tagdir="/WEB-INF/tags/master" %>
 <layout:default title="Профиль">
     
-    <profile:tabMenu activeTab="address"/>
+    <master:tabMenu activeTab="address"/>
 
-    <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/updateAddress" modelAttribute="address" >
+    <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/address/update" modelAttribute="address" >
         <div class="form-group">
             <label for="city" class="col-sm-3 control-label">Город</label>
             <div class="col-sm-6">

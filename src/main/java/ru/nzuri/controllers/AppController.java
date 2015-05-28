@@ -27,7 +27,7 @@ public class AppController {
     private AuthenticationService authenticationService;
 
     @Inject
-    private MasterService profileService;
+    private MasterService masterService;
 
     @RequestMapping(value = "/", method = {RequestMethod.GET})
     public ModelAndView index() {
@@ -35,8 +35,8 @@ public class AppController {
         if (authenticationService.isAuthenticated()) {
             if (authenticationService.hasRole(Roles.ROLE_MASTER.name())) {
                 User user = authenticationService.getPrincipal();
-                Master profile =profileService.get(user);
-                model = MasterController.prepareView(profile,user);
+                Master master =masterService.get(user);
+                model = MasterController.prepareView(master,user);
             }
             if (authenticationService.hasRole(Roles.ROLE_ADMIN.name())) {
                 model.setViewName("index");

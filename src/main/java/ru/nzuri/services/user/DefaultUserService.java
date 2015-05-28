@@ -35,8 +35,8 @@ public class DefaultUserService extends AbstractService<User> implements UserSer
     @Override
     public void registerNewUser(UserCredential credential, UserData data, Role role) {
         User user = new User(credential,data);
-        UserRole roleRelation = new UserRole(user, role);
-        user.getRoles().add(roleRelation);
+        UserRole userRole = new UserRole(user, role);
+        user.getRoles().add(userRole);
         userRepository.store(user);
     }
 

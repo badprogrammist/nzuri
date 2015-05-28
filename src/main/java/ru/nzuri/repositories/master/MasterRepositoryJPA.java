@@ -35,7 +35,7 @@ public class MasterRepositoryJPA extends AbstractRepositoryJPA<Master> implement
     @Override
     public Master findByUser(User user) {
         try {
-            return getEntityManager().createNamedQuery("Profile.findByUser", Master.class)
+            return getEntityManager().createNamedQuery("Master.findByUser", Master.class)
                     .setParameter("user", user)
                     .getSingleResult();
         } catch(Exception ex) {

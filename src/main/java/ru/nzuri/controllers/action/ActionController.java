@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.nzuri.controllers.service;
+package ru.nzuri.controllers.action;
 
 import javax.inject.Inject;
 import org.springframework.security.access.annotation.Secured;
@@ -26,40 +26,40 @@ import ru.nzuri.services.action.SpecializationService;
  * @author bad
  */
 @Controller
-public class ServiceController {
+public class ActionController {
 
     @Inject
-    private ActionService serviceService;
+    private ActionService actionService;
 
     @Inject
     private SpecializationService specializationService;
 
     @Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/service/new/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/action/new/{id}", method = RequestMethod.GET)
     public ModelAndView create(@PathVariable Long id, final RedirectAttributes redirectAttributes) {
         ModelAndView mav = new ModelAndView();
         Specialization specialization = specializationService.get(id);
         if (specialization != null) {
-            mav.addObject("service", serviceService.createEmptyEntity());
+            mav.addObject("action", actionService.createEmptyEntity());
             mav.addObject("specialization", specialization);
-            mav.setViewName("service/create");
+            mav.setViewName("action/create");
         } else {
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.DANGER, "Специализация не найдена"));
-            mav.setViewName("specialization/services");
+            mav.setViewName("specialization/actions");
         }
         return mav;
     }
 
     @Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/service/save/{id}", method = RequestMethod.POST)
-    public String save(@ModelAttribute("service") Action service, @PathVariable Long id, final RedirectAttributes redirectAttributes) {
-        if (service != null && id != null) {
+    @RequestMapping(value = "/action/save/{id}", method = RequestMethod.POST)
+    public String save(@ModelAttribute("action") Action action, @PathVariable Long id, final RedirectAttributes redirectAttributes) {
+        if (action != null && id != null) {
             Specialization specialization = specializationService.get(id);
             if (specialization != null) {
-                service.setSpecialization(specialization);
-                serviceService.store(service);
+                action.setSpecialization(specialization);
+                actionService.store(action);
                 redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Сохранение выполнено успешно"));
-                return "redirect:/specialization/services/" + service.getSpecialization().getId();
+                return "redirect:/specialization/actions/" + action.getSpecialization().getId();
             } else {
                 redirectAttributes.addFlashAttribute("message", new Message(MessageType.DANGER, "Специализация не найдена"));
                 return "";
@@ -70,33 +70,33 @@ public class ServiceController {
     }
 
     @Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/service/edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/action/edit/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
-        Action service = serviceService.get(id);
-        mav.addObject("service", service);
-        mav.setViewName("service/edit");
+        Action action = actionService.get(id);
+        mav.addObject("action", action);
+        mav.setViewName("action/edit");
         return mav;
     }
 
     @Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/service/update", method = RequestMethod.POST)
-    public String update(@ModelAttribute("service") Action service, Long specializationId, final RedirectAttributes redirectAttributes) {
-        if (service != null) {
-            serviceService.update(service);
+    @RequestMapping(value = "/action/update", method = RequestMethod.POST)
+    public String update(@ModelAttribute("action") Action action, Long specializationId, final RedirectAttributes redirectAttributes) {
+        if (action != null) {
+            actionService.merge(action);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Сохранение выполнено успешно"));
-            return "redirect:/specialization/services/" + specializationId;
+            return "redirect:/specialization/actions/" + specializationId;
         }
         return "";
     }
     
     @Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/service/remove/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/action/remove/{id}", method = RequestMethod.POST)
     public String remove(@PathVariable Long id, Long specializationId,final RedirectAttributes redirectAttributes) {
         if(id != null) {
-            serviceService.remove(id);
+            actionService.remove(id);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Удаление выполнено успешно"));
-            return "redirect:/specialization/services/" + specializationId;
+            return "redirect:/specialization/actions/" + specializationId;
         } else {
             return "";
         }

@@ -4,8 +4,8 @@
 <div class="form-group">
     <label for="title" class="col-sm-3 control-label">Название</label>
     <div class="col-sm-6">
-        <form:input id="title" value="${service.title}" path="title" type="text" class="form-control"  placeholder="Введите название"/>
+        <form:input id="title" value="${action.title}" path="title" type="text" class="form-control"  placeholder="Введите название"/>
     </div>
 </div>
-<form:hidden path="id" value="${service.id}"/>        
-<input type="hidden" name="specializationId" value="${service.specialization.id}"/>        
+<form:hidden path="id" value="${action.id}"/>        
+<input type="hidden" name="specializationId" value="${action.specialization.id}"/>        
