@@ -43,7 +43,7 @@ public class MasterSpecialization extends AbstractEntity<MasterSpecialization> {
     @JoinColumn(name = "specialization_id")
     private Specialization specialization;
 
-    @OneToMany(mappedBy = "masterSpecialization", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "masterSpecialization", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MasterAction> masterActions = new ArrayList<>();
 
     public MasterSpecialization(Master master, Specialization specialization) {

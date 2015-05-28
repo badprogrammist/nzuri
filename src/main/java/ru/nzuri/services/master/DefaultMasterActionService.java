@@ -37,7 +37,13 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
 
     @Override
     public MasterAction get(Master master, Action action) {
-        return masterActionRepository.find(master, action);
+        MasterSpecialization masterSpecialization = getMasterSpecializaion(master, action.getSpecialization());
+        for(MasterAction masterAction : masterSpecialization.getMasterActions()) {
+            if(masterAction.getAction().equals(action)) {
+                return masterAction;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -100,6 +106,21 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
     @Override
     public MasterSpecialization getMasterSpecializaion(Master master, Specialization specialization) {
         return masterActionRepository.findMasterSpecializaion(master, specialization);
+    }
+
+    @Override
+    public void detach(Master master, Action action) {
+        MasterAction masterAction = get(master, action);
+        MasterSpecialization masterSpecialization = getMasterSpecializaion(master, action.getSpecialization());
+        if(masterAction != null) {
+            masterActionRepository.remove(masterAction);
+            masterSpecialization.getMasterActions().remove(masterAction);
+            if(masterSpecialization.getMasterActions().isEmpty()) {
+                masterActionRepository.remove(masterSpecialization);
+                master.getSpecializations().remove(masterSpecialization);
+            }
+        }
+        
     }
     
 }

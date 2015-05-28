@@ -50,7 +50,7 @@ public class Master extends AbstractEntity<Master> {
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Example> examples = new ArrayList<>();
 
-    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL)
     private List<MasterSpecialization> specializations = new ArrayList<>();
 
     public Master() {

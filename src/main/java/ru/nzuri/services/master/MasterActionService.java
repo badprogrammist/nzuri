@@ -22,4 +22,5 @@ public interface MasterActionService extends EntityService<MasterAction> {
     public MasterAction get(Master master, Action service);
     public List<Specialization> getAttachCandidates(Master master);
     public MasterAction attach(Master master, Action action);
+    public void detach(Master master, Action action);
 }

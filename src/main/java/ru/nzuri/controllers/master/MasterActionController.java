@@ -36,19 +36,19 @@ import ru.nzuri.services.master.MasterService;
  */
 @Controller
 public class MasterActionController {
-    
+
     @Inject
     private MasterService masterService;
 
     @Inject
     private AuthenticationService authenticationService;
-    
+
     @Inject
     private ActionService actionService;
-    
+
     @Inject
     private SpecializationService specializationService;
-    
+
     @Inject
     private MasterActionService masterActionService;
 
@@ -57,7 +57,7 @@ public class MasterActionController {
     public ModelAndView editActions() {
         ModelAndView model = new ModelAndView();
         Master master = getCurrentMaster();
-        if(master != null) {
+        if (master != null) {
             List<MasterSpecialization> masterSpecializations = master.getSpecializations();
             model.addObject("master", master);
             model.addObject("masterSpecializations", masterSpecializations);
@@ -68,18 +68,18 @@ public class MasterActionController {
         }
         return model;
     }
-    
+
     @Secured("ROLE_MASTER")
     @RequestMapping(value = "/master/edit/action/update", method = RequestMethod.POST)
     public String updateService(@ModelAttribute("masterAction") MasterAction masterAction, final RedirectAttributes redirectAttributes) {
         Master master = getCurrentMaster();
-        if(master != null) {
+        if (master != null) {
             masterActionService.merge(masterAction);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуга успешна обновлен!"));
         }
         return "redirect:/master/edit/actions";
     }
-    
+
     @Secured("ROLE_MASTER")
     @RequestMapping(value = "/master/action/edit/{id}", method = RequestMethod.GET)
     public ModelAndView masterActionEdit(@PathVariable Long id) {
@@ -88,15 +88,15 @@ public class MasterActionController {
         mav.setViewName("master/edit/masterActionEdit");
         return mav;
     }
-    
+
     @Secured("ROLE_MASTER")
     @RequestMapping(value = "/master/edit/action/attach", method = RequestMethod.POST)
-    public String attachServices(Long[] actions, final RedirectAttributes redirectAttributes) {
+    public String attachActions(Long[] actions, final RedirectAttributes redirectAttributes) {
         Master master = getCurrentMaster();
-        if(master != null) {
-            for(Long actionId : actions) {
+        if (master != null) {
+            for (Long actionId : actions) {
                 Action action = actionService.get(actionId);
-                if(action != null) {
+                if (action != null) {
                     masterActionService.attach(master, action);
                 }
             }
@@ -104,13 +104,24 @@ public class MasterActionController {
         }
         return "redirect:/master/edit/actions";
     }
-    
+
+    @Secured("ROLE_MASTER")
+    @RequestMapping(value = "/master/edit/action/detach", method = RequestMethod.POST)
+    public String attachActions(Long actionId, final RedirectAttributes redirectAttributes) {
+        Master master = getCurrentMaster();
+        if (master != null) {
+            Action action = actionService.get(actionId);
+            if (action != null) {
+                masterActionService.detach(master, action);
+                redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуга успешно удалена!"));
+            }
+        }
+        return "redirect:/master/edit/actions";
+    }
+
     private Master getCurrentMaster() {
         User currentUser = authenticationService.getPrincipal();
         return masterService.get(currentUser);
     }
 
-    
-
-    
 }

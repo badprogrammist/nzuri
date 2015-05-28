@@ -31,7 +31,10 @@
                                     <a href="${pageContext.request.contextPath}/master/action/edit/${masterAction.id}">Редактировать</a>
                                 </td>
                                 <td>
-                                    <a href="#">Удалить</a>
+                                    <form role="form" method="post" action="${pageContext.request.contextPath}/master/edit/action/detach" >
+                                        <input type="hidden" name="actionId" value="${masterAction.action.id}"/>
+                                        <button class="btn bg-primary btn-sm" type="submit">Удалить</button>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
