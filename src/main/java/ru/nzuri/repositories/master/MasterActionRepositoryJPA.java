@@ -59,4 +59,9 @@ public class MasterActionRepositoryJPA extends AbstractRepositoryJPA<MasterActio
         }
     }
 
+    @Override
+    public void store(MasterSpecialization masterSpecialization) {
+        getEntityManager().persist(getEntityManager().merge(masterSpecialization));
+    }
+
 }

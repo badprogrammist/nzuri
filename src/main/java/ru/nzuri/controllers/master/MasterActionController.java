@@ -59,21 +59,9 @@ public class MasterActionController {
         Master master = getCurrentMaster();
         if(master != null) {
             List<MasterSpecialization> masterSpecializations = master.getSpecializations();
-            List<Specialization> specializations = specializationService.getAll();
-            specializations.stream().forEach((specialization) -> {
-                List<Action> toRemove = new ArrayList<>();
-                specialization.getActions().stream().forEach((action) -> {
-                    masterSpecializations.stream().forEach((masterSpecialization) -> {
-                        masterSpecialization.getMasterActions().stream().filter((masterAction) -> (masterAction.getAction().equals(action))).forEach((_item) -> {
-                            toRemove.add(action);
-                        });
-                    });
-                });
-                specialization.getActions().removeAll(toRemove);
-            });
             model.addObject("master", master);
             model.addObject("masterSpecializations", masterSpecializations);
-            model.addObject("specializations", specializations);
+            model.addObject("specializations", masterActionService.getAttachCandidates(master));
             model.setViewName("master/edit/actions");
         } else {
             model.setViewName("404");
@@ -109,31 +97,9 @@ public class MasterActionController {
             for(Long actionId : actions) {
                 Action action = actionService.get(actionId);
                 if(action != null) {
-                    MasterSpecialization masterSpecialization = null;
-                    for(MasterSpecialization ms : master.getSpecializations()) {
-                        if(ms.getSpecialization().equals(action.getSpecialization())) {
-                            masterSpecialization = ms;
-                            break;
-                        }
-                    }
-                    if(masterSpecialization == null) {
-                        masterSpecialization = new MasterSpecialization(master, action.getSpecialization());
-                        master.getSpecializations().add(masterSpecialization);
-                    }
-                    boolean exist = false;
-                    for(MasterAction masterAction : masterSpecialization.getMasterActions()) {
-                        if(masterAction.getAction().equals(action)) {
-                            exist = true;
-                            break;
-                        }
-                    }
-                    if(!exist) {
-                        MasterAction masterAction = new MasterAction(masterSpecialization, action);
-                        masterSpecialization.getMasterActions().add(masterAction);
-                    }
+                    masterActionService.attach(master, action);
                 }
             }
-            masterService.update(master);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуги успешно прикрепленны!"));
         }
         return "redirect:/master/edit/actions";

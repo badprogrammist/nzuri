@@ -5,6 +5,7 @@
  */
 package ru.nzuri.services.master;
 
+import java.util.List;
 import ru.nzuri.domain.action.Action;
 import ru.nzuri.domain.action.Specialization;
 import ru.nzuri.domain.master.Master;
@@ -19,4 +20,6 @@ import ru.nzuri.services.EntityService;
 public interface MasterActionService extends EntityService<MasterAction> {
     public MasterSpecialization getMasterSpecializaion(Master master, Specialization specialization);
     public MasterAction get(Master master, Action service);
+    public List<Specialization> getAttachCandidates(Master master);
+    public MasterAction attach(Master master, Action action);
 }
