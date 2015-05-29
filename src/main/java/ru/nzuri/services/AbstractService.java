@@ -14,22 +14,24 @@ import ru.nzuri.domain.EntityRepository;
  *
  * @author bad
  */
-@Transactional
 public abstract class AbstractService<E extends AbstractEntity> implements EntityService<E> {
 
     protected abstract EntityRepository<E> getRepository();
 
     @Override
+    @Transactional
     public void store(E entity) {
         getRepository().store(entity);
     }
 
     @Override
+    @Transactional
     public E update(E entity) {
         return getRepository().update(entity);
     }
 
     @Override
+    @Transactional
     public E merge(E entity) {
         if (entity != null && entity.getId() != null) {
             E old = get(entity.getId());
@@ -52,6 +54,7 @@ public abstract class AbstractService<E extends AbstractEntity> implements Entit
     }
 
     @Override
+    @Transactional
     public void remove(Long id) {
         E entity = get(id);
         if (entity != null) {
@@ -60,6 +63,7 @@ public abstract class AbstractService<E extends AbstractEntity> implements Entit
     }
 
     @Override
+    @Transactional
     public void remove(E entity) {
         getRepository().remove(entity);
     }

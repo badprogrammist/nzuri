@@ -17,5 +17,6 @@ public interface MasterActionRepository extends EntityRepository<MasterAction> {
     public MasterSpecialization findMasterSpecializaion(Master master, Specialization specialization);
     public MasterAction find(Master master, Action action);
     public void store(MasterSpecialization masterSpecialization);
+    public MasterSpecialization update(MasterSpecialization masterSpecialization);
     public void remove(MasterSpecialization masterSpecialization);
 }

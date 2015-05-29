@@ -26,7 +26,6 @@ import ru.nzuri.services.action.SpecializationService;
  * @author bad
  */
 @Service
-@Transactional
 public class DefaultMasterActionService extends AbstractService<MasterAction> implements MasterActionService {
 
     @Inject
@@ -34,13 +33,18 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
 
     @Inject
     private SpecializationService specializationService;
+    
+    @Inject
+    private MasterService masterService;
 
     @Override
     public MasterAction get(Master master, Action action) {
         MasterSpecialization masterSpecialization = getMasterSpecializaion(master, action.getSpecialization());
-        for(MasterAction masterAction : masterSpecialization.getMasterActions()) {
-            if(masterAction.getAction().equals(action)) {
-                return masterAction;
+        if (masterSpecialization != null) {
+            for (MasterAction masterAction : masterSpecialization.getMasterActions()) {
+                if (masterAction.getAction().equals(action)) {
+                    return masterAction;
+                }
             }
         }
         return null;
@@ -59,21 +63,24 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
     @Override
     public List<Specialization> getAttachCandidates(Master master) {
         List<Specialization> specializations = specializationService.getAll();
-        specializations.stream().forEach((specialization) -> {
+        for (Specialization specialization : specializations) {
             List<Action> toRemove = new ArrayList<>();
-            specialization.getActions().stream().forEach((action) -> {
-                master.getSpecializations().stream().forEach((masterSpecialization) -> {
-                    masterSpecialization.getMasterActions().stream().filter((masterAction) -> (masterAction.getAction().equals(action))).forEach((_item) -> {
-                        toRemove.add(action);
-                    });
-                });
-            });
+            for (Action action : specialization.getActions()) {
+                for (MasterSpecialization masterSpecialization : master.getSpecializations()) {
+                    for (MasterAction masterAction : masterSpecialization.getMasterActions()) {
+                        if (masterAction.getAction().equals(action)) {
+                            toRemove.add(action);
+                        }
+                    }
+                }
+            }
             specialization.getActions().removeAll(toRemove);
-        });
+        }
         return specializations;
     }
 
     @Override
+    @Transactional
     public MasterAction attach(Master master, Action action) {
         MasterSpecialization masterSpecialization = attach(master, action.getSpecialization());
         MasterAction masterAction = null;
@@ -86,19 +93,18 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
         if (masterAction == null) {
             masterAction = new MasterAction(masterSpecialization, action);
             masterSpecialization.getMasterActions().add(masterAction);
-            masterActionRepository.store(masterAction);
-            masterAction = masterActionRepository.find(master, action);
+            masterActionRepository.update(masterSpecialization);
         }
         return masterAction;
     }
-    
+
+    @Transactional
     public MasterSpecialization attach(Master master, Specialization specialization) {
         MasterSpecialization masterSpecialization = getMasterSpecializaion(master, specialization);
         if (masterSpecialization == null) {
             masterSpecialization = new MasterSpecialization(master, specialization);
             master.getSpecializations().add(masterSpecialization);
-            masterActionRepository.store(masterSpecialization);
-            masterSpecialization = getMasterSpecializaion(master, specialization);
+            masterService.update(master);
         }
         return masterSpecialization;
     }
@@ -109,18 +115,19 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
     }
 
     @Override
+    @Transactional
     public void detach(Master master, Action action) {
         MasterAction masterAction = get(master, action);
         MasterSpecialization masterSpecialization = getMasterSpecializaion(master, action.getSpecialization());
-        if(masterAction != null) {
-            masterActionRepository.remove(masterAction);
+        if (masterAction != null) {
             masterSpecialization.getMasterActions().remove(masterAction);
-            if(masterSpecialization.getMasterActions().isEmpty()) {
-                masterActionRepository.remove(masterSpecialization);
+            masterActionRepository.update(masterSpecialization);
+            if (masterSpecialization.getMasterActions().isEmpty()) {
                 master.getSpecializations().remove(masterSpecialization);
+                masterService.update(master);
             }
         }
-        
+
     }
-    
+
 }

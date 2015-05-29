@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,7 +32,8 @@ public class Specialization extends AbstractEntity<Specialization> {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "specialization",cascade = CascadeType.ALL)
+    //EAGER - когда создаешь услугу в админке и переходишь к мастеру, новых услуг у него нет
+    @OneToMany(mappedBy = "specialization",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Action> actions = new ArrayList<>();
     
     public Specialization() {
