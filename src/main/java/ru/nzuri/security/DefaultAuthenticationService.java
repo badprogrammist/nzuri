@@ -51,7 +51,6 @@ public class DefaultAuthenticationService implements AuthenticationService {
         }
     }
     
-    
     @Override
     public boolean isAuthenticated() {
         return SecurityContextHolder.getContext().getAuthentication().isAuthenticated() && SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser";

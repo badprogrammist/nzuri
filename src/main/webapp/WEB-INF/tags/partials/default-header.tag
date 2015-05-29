@@ -16,18 +16,20 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="${pageContext.request.contextPath}/masters">Мастера</a></li>
-                <sec:authorize  access="hasRole('ROLE_ADMIN')">
+                    <sec:authorize  access="hasRole('ROLE_ADMIN')">
                     <li><a href="${pageContext.request.contextPath}/specializations">Специализации</a></li>
-                </sec:authorize>
-                
+                    </sec:authorize>
+
             </ul>
             <sec:authorize access="isAuthenticated()">
-                
                 <sec:authentication var="principal" property="principal" />
-                <p class="navbar-text navbar-right">
+                <div class="navbar-text navbar-right">
                     <common:image style="height:30px;  vertical-align:middle;" styleClass="img-circle" fileId="${principal.userData.icon.id}"/>
                     ${principal.username}
-                </p>
+                    <form action="${pageContext.request.contextPath}/logout">
+                        <button type="submit">Выйти</button>
+                    </form>
+                </div>
             </sec:authorize>
             <sec:authorize access="!isAuthenticated()">
                 <ul class="nav navbar-nav navbar-right">

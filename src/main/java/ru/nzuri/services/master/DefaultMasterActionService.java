@@ -18,7 +18,6 @@ import ru.nzuri.domain.master.MasterAction;
 import ru.nzuri.domain.master.MasterActionRepository;
 import ru.nzuri.domain.master.MasterSpecialization;
 import ru.nzuri.services.AbstractService;
-import ru.nzuri.services.action.ActionService;
 import ru.nzuri.services.action.SpecializationService;
 
 /**
@@ -63,19 +62,24 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
     @Override
     public List<Specialization> getAttachCandidates(Master master) {
         List<Specialization> specializations = specializationService.getAll();
+        List<Specialization> toRemoveSpecializations = new ArrayList<>();
         for (Specialization specialization : specializations) {
-            List<Action> toRemove = new ArrayList<>();
+            List<Action> toRemoveActions = new ArrayList<>();
             for (Action action : specialization.getActions()) {
                 for (MasterSpecialization masterSpecialization : master.getSpecializations()) {
                     for (MasterAction masterAction : masterSpecialization.getMasterActions()) {
                         if (masterAction.getAction().equals(action)) {
-                            toRemove.add(action);
+                            toRemoveActions.add(action);
                         }
                     }
                 }
             }
-            specialization.getActions().removeAll(toRemove);
+            specialization.getActions().removeAll(toRemoveActions);
+            if(specialization.getActions().isEmpty()) {
+                toRemoveSpecializations.add(specialization);
+            }
         }
+        specializations.removeAll(toRemoveSpecializations);
         return specializations;
     }
 
