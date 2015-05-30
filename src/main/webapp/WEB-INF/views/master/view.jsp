@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
+<%@taglib prefix="master" tagdir="/WEB-INF/tags/master" %>
 <layout:two-column title="Профиль">
     <jsp:attribute name="left">
         <common:image styleClass="img-responsive img-border" fileId="${master.user.userData.icon.id}"/>
@@ -23,6 +24,9 @@
                     </a>
                 </div>
             </c:forEach>
+            <h2>Комментарии</h2>
+            <master:comments/>
+            <master:addCommentForm/>
         </div>
 
 

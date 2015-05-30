@@ -28,7 +28,7 @@ import ru.nzuri.services.master.MasterService;
  * @author bad
  */
 @Controller
-public class MasterEducationController {
+public class EducationController {
 
     @Inject
     private MasterService masterService;

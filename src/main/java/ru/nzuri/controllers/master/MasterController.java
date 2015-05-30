@@ -5,6 +5,7 @@
  */
 package ru.nzuri.controllers.master;
 
+import java.util.List;
 import javax.inject.Inject;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -17,11 +18,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
 import ru.nzuri.domain.master.Address;
+import ru.nzuri.domain.master.Comment;
 import ru.nzuri.domain.master.Master;
 import ru.nzuri.domain.user.User;
 import ru.nzuri.security.AuthenticationService;
 import ru.nzuri.services.action.ActionService;
 import ru.nzuri.services.action.SpecializationService;
+import ru.nzuri.services.master.CommentService;
 import ru.nzuri.services.master.MasterService;
 
 /**
@@ -33,9 +36,12 @@ public class MasterController {
     
     @Inject
     private MasterService masterService;
-
+    
     @Inject
     private AuthenticationService authenticationService;
+    
+    @Inject
+    private CommentService commentService;
     
     @Inject
     private ActionService actionService;
@@ -55,7 +61,7 @@ public class MasterController {
     public ModelAndView view(@PathVariable Long id) {
         Master master = masterService.get(id);
         User currentUser = authenticationService.getPrincipal();
-        return prepareView(master,currentUser);
+        return prepareView(master,currentUser,commentService.getAll(master));
     }
 
     @Secured("ROLE_MASTER")
@@ -117,10 +123,12 @@ public class MasterController {
         return masterService.get(currentUser);
     }
 
-    public static ModelAndView prepareView(Master master, User currentUser) {
+    public static ModelAndView prepareView(Master master, User currentUser, List<Comment> comments) {
         ModelAndView model = new ModelAndView();
         if(master != null) {
             model.addObject("master", master);
+            model.addObject("comment", new Comment());
+            model.addObject("comments", comments);
             model.addObject("editable", master.getUser().equals(currentUser));
             model.setViewName("master/view");
         } else {

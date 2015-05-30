@@ -15,6 +15,7 @@ import ru.nzuri.domain.master.Master;
 import ru.nzuri.domain.user.Roles;
 import ru.nzuri.domain.user.User;
 import ru.nzuri.security.AuthenticationService;
+import ru.nzuri.services.master.CommentService;
 import ru.nzuri.services.master.MasterService;
 
 /**
@@ -27,6 +28,9 @@ public class AppController {
     private AuthenticationService authenticationService;
 
     @Inject
+    private CommentService commentService;
+    
+    @Inject
     private MasterService masterService;
 
     @RequestMapping(value = "/", method = {RequestMethod.GET})
@@ -36,9 +40,12 @@ public class AppController {
             if (authenticationService.hasRole(Roles.ROLE_MASTER.name())) {
                 User user = authenticationService.getPrincipal();
                 Master master =masterService.get(user);
-                model = MasterController.prepareView(master,user);
+                model = MasterController.prepareView(master,user,commentService.getAll(master));
             }
             if (authenticationService.hasRole(Roles.ROLE_ADMIN.name())) {
+                model.setViewName("index");
+            }
+            if (authenticationService.hasRole(Roles.ROLE_USER.name())) {
                 model.setViewName("index");
             }
         } else {

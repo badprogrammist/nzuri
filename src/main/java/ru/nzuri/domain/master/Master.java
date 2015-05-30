@@ -55,6 +55,9 @@ public class Master extends AbstractEntity<Master> {
     
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Education> educations = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     public Master() {
     }
@@ -108,6 +111,14 @@ public class Master extends AbstractEntity<Master> {
 
     public void setEducations(List<Education> educations) {
         this.educations = educations;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
 }
