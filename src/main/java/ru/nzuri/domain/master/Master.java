@@ -52,6 +52,9 @@ public class Master extends AbstractEntity<Master> {
 
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MasterSpecialization> specializations = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Education> educations = new ArrayList<>();
 
     public Master() {
     }
@@ -97,6 +100,14 @@ public class Master extends AbstractEntity<Master> {
 
     @Override
     public void merge(Master entity) {
+    }
+
+    public List<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(List<Education> educations) {
+        this.educations = educations;
     }
 
 }

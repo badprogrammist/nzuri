@@ -5,6 +5,7 @@
 <ul class="nav nav-tabs">
     <li role="presentation" class="${activeTab.equals('main') ? 'active' : ''}"><a href="${pageContext.request.contextPath}/master/edit">Основное</a></li>
     <li role="presentation" class="${activeTab.equals('examples') ? 'active' : ''}"><a href="${pageContext.request.contextPath}/master/edit/examples">Примеры</a></li>
+    <li role="presentation" class="${activeTab.equals('education') ? 'active' : ''}"><a href="${pageContext.request.contextPath}/master/edit/education">Образование</a></li>
     <li role="presentation" class="${activeTab.equals('address') ? 'active' : ''}"><a href="${pageContext.request.contextPath}/master/edit/address">Адрес</a></li>
     <li role="presentation" class="${activeTab.equals('actions') ? 'active' : ''}"><a href="${pageContext.request.contextPath}/master/edit/actions">Услуги</a></li>
 </ul>       

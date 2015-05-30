@@ -16,7 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import ru.nzuri.domain.AbstractEntity;
 import ru.nzuri.domain.action.Specialization;
 
 /**
@@ -33,11 +32,7 @@ import ru.nzuri.domain.action.Specialization;
             name = "MasterSpecialization.findByMasterAndSpecialization",
             query = "Select c from MasterSpecialization c where c.master = :master and c.specialization = :specialization")
 })
-public class MasterSpecialization extends AbstractEntity<MasterSpecialization> {
-
-    @ManyToOne
-    @JoinColumn(name = "master_id")
-    private Master master;
+public class MasterSpecialization extends AbstractMasterCharacteristic<MasterSpecialization> {
 
     @ManyToOne
     @JoinColumn(name = "specialization_id")
@@ -47,19 +42,11 @@ public class MasterSpecialization extends AbstractEntity<MasterSpecialization> {
     private List<MasterAction> masterActions = new ArrayList<>();
 
     public MasterSpecialization(Master master, Specialization specialization) {
-        this.master = master;
+        super(master);
         this.specialization = specialization;
     }
 
     public MasterSpecialization() {
-    }
-
-    public Master getMaster() {
-        return master;
-    }
-
-    public void setMaster(Master master) {
-        this.master = master;
     }
 
     public Specialization getSpecialization() {

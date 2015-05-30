@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import ru.nzuri.domain.AbstractEntity;
 import ru.nzuri.domain.file.File;
 
 /**
@@ -27,12 +26,8 @@ import ru.nzuri.domain.file.File;
     @NamedQuery(name = "Example.findAll",
             query = "Select c from Example  c")
 })
-public class Example extends AbstractEntity<Example> {
-    
-    @ManyToOne
-    @JoinColumn(name = "master_id")
-    private Master master;
-    
+public class Example extends AbstractMasterCharacteristic<Example> {
+
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private File image;
@@ -41,7 +36,7 @@ public class Example extends AbstractEntity<Example> {
     private String comment;
 
     public Example(Master master, File image, String comment) {
-        this.master = master;
+        super(master);
         this.image = image;
         this.comment = comment;
     }
@@ -55,14 +50,6 @@ public class Example extends AbstractEntity<Example> {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public Master getMaster() {
-        return master;
-    }
-
-    public void setMaster(Master master) {
-        this.master = master;
     }
 
     public File getImage() {
