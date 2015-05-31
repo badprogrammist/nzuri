@@ -25,8 +25,10 @@
                 </div>
             </c:forEach>
             <h2>Комментарии</h2>
-            <master:comments/>
-            <master:addCommentForm/>
+            <div id="master_comments">
+                <jsp:include page="comment/_comments.jsp"/>
+            </div>
+                <master:addCommentForm updateContainerSelector="#master_comments"/>
         </div>
 
 

@@ -43,10 +43,7 @@ public class EducationController {
     @RequestMapping(value = "/master/edit/education", method = RequestMethod.GET)
     public ModelAndView masterEducationEdit() {
         ModelAndView mav = new ModelAndView();
-        Master master = getCurrentMaster();
-        if (master != null) {
-            mav.addObject("educations", educationService.getAll(master));
-        }
+        prepareList(mav);
         mav.addObject("education", educationService.createEmptyEntity());
         mav.setViewName("master/edit/education");
         return mav;
@@ -54,14 +51,17 @@ public class EducationController {
 
     @Secured("ROLE_MASTER")
     @RequestMapping(value = "/master/edit/education/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("education") Education education, final RedirectAttributes redirectAttributes) {
+    public ModelAndView save(@ModelAttribute("education") Education education, final RedirectAttributes redirectAttributes) {
         Master master = getCurrentMaster();
+        ModelAndView mav = new ModelAndView();
         if (master != null) {
             education.setMaster(master);
             educationService.store(education);
+            prepareList(mav);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Образовательное учреждение добавленно!"));
         }
-        return "redirect:/master/edit/education";
+        mav.setViewName("master/education/_list");
+        return mav;
     }
 
     @Secured("ROLE_MASTER")
@@ -69,33 +69,48 @@ public class EducationController {
     public ModelAndView edit(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("education", educationService.get(id));
-        mav.setViewName("master/edit/educationEdit");
+        mav.setViewName("master/education/_edit");
+        return mav;
+    }
+    
+    @Secured("ROLE_MASTER")
+    @RequestMapping(value = "/master/education/list", method = RequestMethod.GET)
+    public ModelAndView list() {
+        ModelAndView mav = new ModelAndView();
+        prepareList(mav);
+        mav.setViewName("master/education/_list");
         return mav;
     }
 
     @Secured("ROLE_MASTER")
     @RequestMapping(value = "/master/edit/education/update", method = RequestMethod.POST)
-    public String update(@ModelAttribute("education") Education education, final RedirectAttributes redirectAttributes) {
+    public ModelAndView update(@ModelAttribute("education") Education education, final RedirectAttributes redirectAttributes) {
+        ModelAndView mav = new ModelAndView();
         educationService.merge(education);
+        prepareList(mav);
+        mav.setViewName("master/education/_list");
         redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуги успешно прикрепленны!"));
-        return "redirect:/master/edit/education";
+        return mav;
     }
 
     @Secured("ROLE_MASTER")
     @RequestMapping(value = "/master/edit/education/remove/{id}", method = RequestMethod.POST)
-    public String remove(@PathVariable Long id, final RedirectAttributes redirectAttributes) {
+    public ModelAndView remove(@PathVariable Long id, final RedirectAttributes redirectAttributes) {
+        ModelAndView mav = new ModelAndView();
         educationService.remove(id);
+        prepareList(mav);
+        mav.setViewName("master/education/_list");
         redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуги успешно прикрепленны!"));
-        return "redirect:/master/edit/education";
+        return mav;
+    }
+    
+    private void prepareList(ModelAndView mav) {
+        Master master = getCurrentMaster();
+        User currentUser = authenticationService.getPrincipal();
+        mav.addObject("educations", educationService.getAll(master));
+        mav.addObject("editable", master.getUser().equals(currentUser));
     }
 
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder) {
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-//        sdf.setLenient(true);
-//        binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-//    }
-    
     private Master getCurrentMaster() {
         User currentUser = authenticationService.getPrincipal();
         return masterService.get(currentUser);

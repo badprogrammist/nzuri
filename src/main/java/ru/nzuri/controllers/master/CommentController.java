@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
@@ -40,18 +41,21 @@ public class CommentController {
 
     @Secured("ROLE_USER")
     @RequestMapping(value = "/master/comment/add/{masterId}", method = RequestMethod.POST)
-    public String addComment(@ModelAttribute("comment") Comment comment,@PathVariable Long masterId, final RedirectAttributes redirectAttributes) {
+    public ModelAndView addComment(@ModelAttribute("comment") Comment comment,@PathVariable Long masterId, final RedirectAttributes redirectAttributes) {
         Master master = masterService.get(masterId);
         User currentUser = authenticationService.getPrincipal();
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("master/comment/_comments");
         if (master != null && currentUser != null && comment.getContent() != null && !comment.getContent().isEmpty()) {
             comment.setMaster(master);
             comment.setUser(currentUser);
             commentService.store(comment);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Комментарий добавлен"));
+            mav.addObject("comments", commentService.getAll(master));
         } else {
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.DANGER, "Не удалось добавить комментарий"));
         }
-        return "redirect:/master/"+masterId;
+        return mav;
     }
 
    

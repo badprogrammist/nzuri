@@ -35,3 +35,5 @@
     </div>
 </div>
 <form:hidden path="id" value="${education.id}"/> 
+
+
