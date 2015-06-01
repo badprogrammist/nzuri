@@ -9,12 +9,12 @@
     <table class="table">
         <c:forEach var="specialization" items="${specializations}">
             <tr>
-                <td>${specialization.title}</td>
+                <td>${specialization.data.title}</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/specialization/edit/${specialization.id}">Редактировать</a>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/specialization/actions/${specialization.id}">Услуги</a>
+                    <a href="${pageContext.request.contextPath}/specialization/${specialization.id}/actions">Услуги</a>
                 </td>
                 <td>
                     <form action="${pageContext.request.contextPath}/specialization/remove/${specialization.id}" method="POST">

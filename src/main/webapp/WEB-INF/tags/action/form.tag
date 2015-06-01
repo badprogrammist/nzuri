@@ -4,7 +4,7 @@
 <div class="form-group">
     <label for="title" class="col-sm-3 control-label">Название</label>
     <div class="col-sm-6">
-        <form:input id="title" value="${action.title}" path="title" type="text" class="form-control"  placeholder="Введите название"/>
+        <form:input id="title" value="${action.data.title}" path="data.title" type="text" class="form-control"  placeholder="Введите название"/>
     </div>
 </div>
 <form:hidden path="id" value="${action.id}"/>        

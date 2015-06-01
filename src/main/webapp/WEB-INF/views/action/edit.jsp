@@ -4,7 +4,7 @@
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@taglib prefix="action" tagdir="/WEB-INF/tags/action" %>
-<layout:default title="${action.title}">
+<layout:default title="${action.data.title}">
     
     
     

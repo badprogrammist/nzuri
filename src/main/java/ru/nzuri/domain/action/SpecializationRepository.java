@@ -5,6 +5,7 @@
  */
 package ru.nzuri.domain.action;
 
+import java.util.List;
 import ru.nzuri.domain.EntityRepository;
 
 /**
@@ -12,5 +13,5 @@ import ru.nzuri.domain.EntityRepository;
  * @author bad
  */
 public interface SpecializationRepository extends EntityRepository<Specialization> {
-    
+    public List<Specialization> findCommonSpecializations();
 }

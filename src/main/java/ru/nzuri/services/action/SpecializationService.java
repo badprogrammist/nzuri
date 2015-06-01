@@ -5,6 +5,7 @@
  */
 package ru.nzuri.services.action;
 
+import java.util.List;
 import ru.nzuri.domain.action.Specialization;
 import ru.nzuri.services.EntityService;
 
@@ -13,5 +14,5 @@ import ru.nzuri.services.EntityService;
  * @author bad
  */
 public interface SpecializationService extends EntityService<Specialization> {
-    
+    public List<Specialization> getCommonSpecializations();
 }

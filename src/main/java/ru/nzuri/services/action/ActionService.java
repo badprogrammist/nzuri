@@ -15,5 +15,6 @@ import ru.nzuri.services.EntityService;
  * @author bad
  */
 public interface ActionService extends EntityService<Action> {
-    public List<Action> getAll(Specialization specialization);
+    public List<Action> getCommonActions(Specialization specialization);
+    public List<Specialization> getDecomposedCommonActions();
 }

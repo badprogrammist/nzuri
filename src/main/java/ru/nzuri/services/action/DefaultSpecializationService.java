@@ -4,6 +4,7 @@
  */
 package ru.nzuri.services.action;
 
+import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,6 @@ import ru.nzuri.services.AbstractService;
  * @author Ильдар
  */
 @Service
-@Transactional
 public class DefaultSpecializationService extends AbstractService<Specialization> implements SpecializationService {
 
     @Inject
@@ -31,6 +31,11 @@ public class DefaultSpecializationService extends AbstractService<Specialization
     @Override
     public Specialization createEmptyEntity() {
         return new Specialization();
+    }
+
+    @Override
+    public List<Specialization> getCommonSpecializations() {
+        return specializationRepository.findCommonSpecializations();
     }
 
 }

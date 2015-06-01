@@ -5,7 +5,7 @@
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@taglib prefix="action" tagdir="/WEB-INF/tags/action" %>
 <layout:default title="Создание услуги">
-    <h3>${specialization.title}</h3>
+    <h3>${specialization.data.title}</h3>
     <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/action/save/${specialization.id}" modelAttribute="action" >
         
         <action:form/>

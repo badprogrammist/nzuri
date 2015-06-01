@@ -6,7 +6,10 @@
 package ru.nzuri.domain.action;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -24,12 +27,16 @@ import ru.nzuri.domain.AbstractEntity;
     @NamedQuery(name = "Action.findAll",
             query = "Select c from Action c"),
     @NamedQuery(name = "Action.findAllBySpecialization",
-            query = "Select c from Action c where c.specialization = :specialization")
+            query = "Select c from Action c where c.specialization = :specialization and c.ownType = :ownType")
 })
 public class Action extends AbstractEntity<Action> {
     
-    @Column(name="title")
-    private String title;
+    @Embedded
+    private ActionData data = new ActionData();
+    
+    @Column(name = "own_type")
+    @Enumerated(EnumType.STRING)
+    private ActionOwnType ownType = ActionOwnType.COMMON;
     
     @ManyToOne
     @JoinColumn(name = "specialization_id")
@@ -38,30 +45,39 @@ public class Action extends AbstractEntity<Action> {
     public Action() {
     }
 
-    public Action(String title, Specialization specialization) {
-        this.title = title;
+    public Action(ActionData data,ActionOwnType ownType, Specialization specialization) {
+        this.data = data;
         this.specialization = specialization;
+        this.ownType = ownType;
     }
 
     @Override
-    public void merge(Action service) {
-        this.title = service.title;
+    public void merge(Action action) {
+        this.data = action.getData();
     }
     
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public Specialization getSpecialization() {
         return specialization;
     }
 
     public void setSpecialization(Specialization specialization) {
         this.specialization = specialization;
+    }
+
+    public ActionOwnType getOwnType() {
+        return ownType;
+    }
+
+    public void setOwnType(ActionOwnType ownType) {
+        this.ownType = ownType;
+    }
+
+    public ActionData getData() {
+        return data;
+    }
+
+    public void setData(ActionData data) {
+        this.data = data;
     }
     
 }

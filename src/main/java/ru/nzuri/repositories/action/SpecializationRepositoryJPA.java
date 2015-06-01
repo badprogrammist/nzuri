@@ -5,10 +5,12 @@
  */
 package ru.nzuri.repositories.action;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import ru.nzuri.domain.action.Specialization;
+import ru.nzuri.domain.action.SpecializationOwnType;
 import ru.nzuri.domain.action.SpecializationRepository;
 import ru.nzuri.repositories.AbstractRepositoryJPA;
 
@@ -29,6 +31,13 @@ public class SpecializationRepositoryJPA extends AbstractRepositoryJPA<Specializ
     @Override
     protected EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    @Override
+    public List<Specialization> findCommonSpecializations() {
+        return getEntityManager().createNamedQuery("Specialization.findAllByOwnType", Specialization.class)
+                .setParameter("ownType", SpecializationOwnType.COMMON)
+                .getResultList();
     }
 
 }

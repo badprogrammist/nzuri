@@ -12,12 +12,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nzuri.domain.EntityRepository;
 import ru.nzuri.domain.action.Action;
+import ru.nzuri.domain.action.ActionData;
+import ru.nzuri.domain.action.ActionOwnType;
 import ru.nzuri.domain.action.Specialization;
+import ru.nzuri.domain.action.SpecializationData;
+import ru.nzuri.domain.action.SpecializationOwnType;
 import ru.nzuri.domain.master.Master;
 import ru.nzuri.domain.master.MasterAction;
 import ru.nzuri.domain.master.MasterActionRepository;
 import ru.nzuri.domain.master.MasterSpecialization;
 import ru.nzuri.services.AbstractService;
+import ru.nzuri.services.action.ActionService;
 import ru.nzuri.services.action.SpecializationService;
 
 /**
@@ -32,6 +37,9 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
 
     @Inject
     private SpecializationService specializationService;
+    
+    @Inject
+    private ActionService actionService;
     
     @Inject
     private MasterService masterService;
@@ -132,6 +140,24 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
             }
         }
 
+    }
+
+    @Override
+    public void createCustomSpecialization(Master master, SpecializationData specializationData) {
+        if(master != null) {
+            Specialization specialization = new Specialization(specializationData, SpecializationOwnType.CUSTOM);
+            specializationService.store(specialization);
+            attach(master, specialization);
+        }
+    }
+
+    @Override
+    public void createCustomAction(Master master, Specialization specialization, ActionData actionData) {
+        if(master != null && specialization != null) {
+            Action action = new Action(actionData, ActionOwnType.CUSTOM, specialization);
+            actionService.store(action);
+            attach(master, action);
+        }
     }
 
 }

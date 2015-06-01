@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import ru.nzuri.domain.action.Action;
+import ru.nzuri.domain.action.ActionOwnType;
 import ru.nzuri.domain.action.ActionRepository;
 import ru.nzuri.domain.action.Specialization;
 import ru.nzuri.repositories.AbstractRepositoryJPA;
@@ -34,9 +35,10 @@ public class ActionRepositoryJPA extends AbstractRepositoryJPA<Action> implement
     }
 
     @Override
-    public List<Action> findActions(Specialization specialization) {
+    public List<Action> findCommonActions(Specialization specialization) {
         return getEntityManager().createNamedQuery("Action.findAllBySpecialization", Action.class)
                 .setParameter("specialization", specialization)
+                .setParameter("ownType", ActionOwnType.COMMON)
                 .getResultList();
     }
 

@@ -4,14 +4,14 @@
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@taglib prefix="specialization" tagdir="/WEB-INF/tags/specialization" %>
-<layout:default title="${specialization.title}">
+<layout:default title="${specialization.data.title}">
     
     <a href="${pageContext.request.contextPath}/action/new/${specialization.id}">Добавить услугу</a>
     <a href="${pageContext.request.contextPath}/specializations">Специализации</a>
     <table class="table">
         <c:forEach var="action" items="${actions}">
             <tr>
-                <td>${action.title}</td>
+                <td>${action.data.title}</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/action/edit/${action.id}">Редактировать</a>
                 </td>

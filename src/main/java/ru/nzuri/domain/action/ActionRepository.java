@@ -13,5 +13,5 @@ import ru.nzuri.domain.EntityRepository;
  * @author bad
  */
 public interface ActionRepository extends EntityRepository<Action> {
-    public List<Action> findActions(Specialization specialization);
+    public List<Action> findCommonActions(Specialization specialization);
 }

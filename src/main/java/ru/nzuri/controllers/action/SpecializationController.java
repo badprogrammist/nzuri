@@ -37,13 +37,13 @@ public class SpecializationController {
     private ActionService actionService;
     
     @Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/specialization/actions/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/specialization/{id}/actions", method = RequestMethod.GET)
     public ModelAndView actions(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
         Specialization specialization = specializationService.get(id);
         List<Action> actions = Collections.emptyList();
         if(specialization != null) {
-            actions = actionService.getAll(specialization);
+            actions = actionService.getCommonActions(specialization);
             mav.addObject("specialization", specialization);
         }
         mav.addObject("actions", actions);
@@ -55,7 +55,7 @@ public class SpecializationController {
     @RequestMapping(value = "/specializations", method = RequestMethod.GET)
     public ModelAndView list() {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("specializations", specializationService.getAll());
+        mav.addObject("specializations", specializationService.getCommonSpecializations());
         mav.setViewName("specialization/list");
         return mav;
     }

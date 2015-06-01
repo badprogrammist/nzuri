@@ -85,7 +85,7 @@ public class ActionController {
         if (action != null) {
             actionService.merge(action);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Сохранение выполнено успешно"));
-            return "redirect:/specialization/actions/" + specializationId;
+            return "redirect:/specialization/" + specializationId +"/actions";
         }
         return "";
     }
@@ -96,7 +96,7 @@ public class ActionController {
         if(id != null) {
             actionService.remove(id);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Удаление выполнено успешно"));
-            return "redirect:/specialization/actions/" + specializationId;
+            return "redirect:/specialization/" + specializationId +"/actions";
         } else {
             return "";
         }

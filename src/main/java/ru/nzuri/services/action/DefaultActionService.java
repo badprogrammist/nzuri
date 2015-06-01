@@ -6,6 +6,7 @@ package ru.nzuri.services.action;
 
 import java.util.List;
 import javax.inject.Inject;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nzuri.domain.EntityRepository;
 import ru.nzuri.domain.action.Action;
@@ -17,12 +18,14 @@ import ru.nzuri.services.AbstractService;
  *
  * @author Ильдар
  */
-@org.springframework.stereotype.Service
-@Transactional
+@Service
 public class DefaultActionService extends AbstractService<Action> implements ActionService {
 
     @Inject
     private ActionRepository actionRepository;
+    
+    @Inject
+    private SpecializationService specializationService;
 
     @Override
     protected EntityRepository getRepository() {
@@ -35,8 +38,17 @@ public class DefaultActionService extends AbstractService<Action> implements Act
     }
 
     @Override
-    public List<Action> getAll(Specialization specialization) {
-        return actionRepository.findActions(specialization);
+    public List<Action> getCommonActions(Specialization specialization) {
+        return actionRepository.findCommonActions(specialization);
+    }
+
+    @Override
+    public List<Specialization> getDecomposedCommonActions() {
+        List<Specialization> commonSpecializations = specializationService.getCommonSpecializations();
+        for(Specialization specialization : commonSpecializations) {
+            specialization.setActions(getCommonActions(specialization));
+        }
+        return commonSpecializations;
     }
 
 }
