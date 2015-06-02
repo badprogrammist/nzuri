@@ -20,6 +20,7 @@ import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
 import ru.nzuri.domain.action.Action;
 import ru.nzuri.domain.action.Specialization;
+import ru.nzuri.domain.action.SpecializationData;
 import ru.nzuri.domain.master.Master;
 import ru.nzuri.domain.master.MasterAction;
 import ru.nzuri.domain.master.MasterSpecialization;
@@ -67,6 +68,60 @@ public class MasterActionController {
             model.setViewName("404");
         }
         return model;
+    }
+    
+    @Secured("ROLE_MASTER")
+    @RequestMapping(value = "/master/specialization/create", method = RequestMethod.GET)
+    public ModelAndView createCustomSpecialization() {
+        ModelAndView model = new ModelAndView();
+        Master master = getCurrentMaster();
+        if (master != null) {
+            model.addObject("master", master);
+            model.addObject("specialization", new Specialization());
+            model.setViewName("master/specialization/create");
+        } else {
+            model.setViewName("404");
+        }
+        return model;
+    }
+    
+    @Secured("ROLE_MASTER")
+    @RequestMapping(value = "/master/specialization/save", method = RequestMethod.POST)
+    public String saveCustomSpecialization(@ModelAttribute("specialization") Specialization specialization, final RedirectAttributes redirectAttributes) {
+        Master master = getCurrentMaster();
+        if (master != null) {
+            masterActionService.createCustomSpecialization(master,specialization.getData());
+            redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуга успешна обновлен!"));
+        }
+        return "redirect:/master/edit/actions";
+    }
+    
+    @Secured("ROLE_MASTER")
+    @RequestMapping(value = "/master/action/create/{specializationId}", method = RequestMethod.GET)
+    public ModelAndView createCustomAction(@PathVariable Long specializationId) {
+        ModelAndView model = new ModelAndView();
+        Master master = getCurrentMaster();
+        if (master != null) {
+            model.addObject("master", master);
+            model.addObject("specialization", specializationService.get(specializationId));
+            model.addObject("action", new Action());
+            model.setViewName("master/action/create");
+        } else {
+            model.setViewName("404");
+        }
+        return model;
+    }
+    
+    @Secured("ROLE_MASTER")
+    @RequestMapping(value = "/master/action/save/{specializationId}", method = RequestMethod.POST)
+    public String saveCustomAction(@ModelAttribute("action") Action action,@PathVariable Long specializationId, final RedirectAttributes redirectAttributes) {
+        Master master = getCurrentMaster();
+        Specialization specialization = specializationService.get(specializationId);
+        if (master != null && specialization != null) {
+            masterActionService.createCustomAction(master,specialization,action.getData());
+            redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуга успешна обновлен!"));
+        }
+        return "redirect:/master/edit/actions";
     }
 
     @Secured("ROLE_MASTER")

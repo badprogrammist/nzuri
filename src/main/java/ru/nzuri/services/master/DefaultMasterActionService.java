@@ -69,7 +69,7 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
 
     @Override
     public List<Specialization> getAttachCandidates(Master master) {
-        List<Specialization> specializations = specializationService.getAll();
+        List<Specialization> specializations = actionService.getDecomposedCommonActions();
         List<Specialization> toRemoveSpecializations = new ArrayList<>();
         for (Specialization specialization : specializations) {
             List<Action> toRemoveActions = new ArrayList<>();
@@ -143,19 +143,21 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
     }
 
     @Override
+    @Transactional
     public void createCustomSpecialization(Master master, SpecializationData specializationData) {
         if(master != null) {
             Specialization specialization = new Specialization(specializationData, SpecializationOwnType.CUSTOM);
-            specializationService.store(specialization);
+//            specializationService.store(specialization);
             attach(master, specialization);
         }
     }
 
     @Override
+    @Transactional
     public void createCustomAction(Master master, Specialization specialization, ActionData actionData) {
         if(master != null && specialization != null) {
             Action action = new Action(actionData, ActionOwnType.CUSTOM, specialization);
-            actionService.store(action);
+//            actionService.store(action);
             attach(master, action);
         }
     }

@@ -10,9 +10,11 @@
 
     <div class="row">
         <div class="col-sm-6">
+            <p><a href="${pageContext.request.contextPath}/master/specialization/create">Добавить специлизацию</a></p>
             <h3>Услуги</h3>
             <c:forEach items="${masterSpecializations}" var="masterSpecialization">
-                <p>${masterSpecialization.specialization.title}</p>
+                <p>${masterSpecialization.specialization.data.title}</p>
+                <p><a href="${pageContext.request.contextPath}/master/action/create/${masterSpecialization.specialization.id}">Добавить услугу</a></p>
                 <table class="table">
                     <thead>
                         <tr>
@@ -25,7 +27,7 @@
                     <tbody>
                         <c:forEach items="${masterSpecialization.masterActions}" var="masterAction" varStatus="status">
                             <tr>
-                                <td><a href="#">${masterAction.action.title}</a></td>
+                                <td><a href="#">${masterAction.action.data.title}</a></td>
                                 <td>${masterAction.price.value}</td>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/master/action/edit/${masterAction.id}">Редактировать</a>
@@ -46,11 +48,11 @@
             <h3>Другие услуги</h3>
             <form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/action/attach" >
                 <c:forEach items="${specializations}" var="specialization">
-                    <p>${specialization.title}</p>
+                    <p>${specialization.data.title}</p>
                     <c:forEach items="${specialization.actions}" var="action">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="actions"  value="${action.id}"/> ${action.title}
+                                <input type="checkbox" name="actions"  value="${action.id}"/> ${action.data.title}
                             </label>
                         </div>
                     </c:forEach>

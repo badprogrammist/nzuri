@@ -20,6 +20,7 @@ import ru.nzuri.services.EntityService;
  * @author bad
  */
 public interface MasterActionService extends EntityService<MasterAction> {
+    
     public MasterSpecialization getMasterSpecializaion(Master master, Specialization specialization);
     public MasterAction get(Master master, Action service);
     public List<Specialization> getAttachCandidates(Master master);

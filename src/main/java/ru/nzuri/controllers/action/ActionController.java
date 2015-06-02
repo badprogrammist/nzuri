@@ -59,7 +59,7 @@ public class ActionController {
                 action.setSpecialization(specialization);
                 actionService.store(action);
                 redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Сохранение выполнено успешно"));
-                return "redirect:/specialization/actions/" + action.getSpecialization().getId();
+                return "redirect:/specialization/" + action.getSpecialization().getId()+"/actions";
             } else {
                 redirectAttributes.addFlashAttribute("message", new Message(MessageType.DANGER, "Специализация не найдена"));
                 return "";
