@@ -8,4 +8,4 @@
     </div>
 </div>
 <form:hidden path="id" value="${action.id}"/>        
-<input type="hidden" name="specializationId" value="${action.specialization.id}"/>        
+<form:hidden path="specializationId" value="${action.specialization.id}"/>        

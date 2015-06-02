@@ -4,15 +4,13 @@
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="master" tagdir="/WEB-INF/tags/master" %>
-<%@taglib prefix="action" tagdir="/WEB-INF/tags/action" %>
 <layout:default title="Профиль">
 
     <master:tabMenu activeTab="actions"/>
 
-    <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/action/save/${specialization.id}" modelAttribute="action" >
-        
-        <action:form/>
-        
+    <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/action/save/${specialization.id}" modelAttribute="masterAction" >
+
+        <master:masterActionForm/>
         <div class="form-group last">
             <div class="col-sm-offset-3 col-sm-6">
                 <button type="submit" class="btn btn-success btn-sm btn-block">Сохранить</button>

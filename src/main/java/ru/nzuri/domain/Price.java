@@ -17,9 +17,19 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Price implements Serializable {
     
+    public static Price NULL = new Price();
+    
     @Column(name = "price_value", scale = 2, precision = 10)
     private BigDecimal value = new BigDecimal(0.0);
 
+    public Price() {
+    }
+
+    public Price(BigDecimal value) {
+        this.value = value;
+    }
+    
+    
     public BigDecimal getValue() {
         return value;
     }

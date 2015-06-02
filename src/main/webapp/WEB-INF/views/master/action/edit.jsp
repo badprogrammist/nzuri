@@ -11,13 +11,7 @@
     <div class="row">
         <div class="col-sm-6">
             <form:form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/action/update" modelAttribute="masterAction" >
-                <div class="form-group">
-                    <label for="price" class="col-sm-3 control-label">Цена</label>
-                    <div class="col-sm-6">
-                        <form:input id="flat" value="${masterAction.price.value}" path="price.value" type="text" class="form-control"  placeholder="Введите цену"/>
-                    </div>
-                </div>
-                <form:hidden path="id" value="${masterAction.id}"/>
+                <master:masterActionForm/>
                 <div class="form-group last">
                     <div class="col-sm-offset-3 col-sm-6">
                         <button type="submit" class="btn btn-success btn-sm btn-block">Сохранить</button>

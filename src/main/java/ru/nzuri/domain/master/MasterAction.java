@@ -41,9 +41,10 @@ public class MasterAction extends AbstractEntity<MasterAction> {
     @Embedded
     private Price price = new Price();
 
-    public MasterAction(MasterSpecialization masterSpecialization, Action action) {
+    public MasterAction(MasterSpecialization masterSpecialization, Action action,Price price) {
         this.masterSpecialization = masterSpecialization;
         this.action = action;
+        this.price = price;
     }
 
     public MasterAction() {

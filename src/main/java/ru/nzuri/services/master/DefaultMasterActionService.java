@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nzuri.domain.EntityRepository;
+import ru.nzuri.domain.Price;
 import ru.nzuri.domain.action.Action;
 import ru.nzuri.domain.action.ActionData;
 import ru.nzuri.domain.action.ActionOwnType;
@@ -59,7 +60,11 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
 
     @Override
     public MasterAction createEmptyEntity() {
-        return new MasterAction();
+        MasterAction masterAction = new MasterAction();
+        Action action = new Action();
+        action.setOwnType(ActionOwnType.CUSTOM);
+        masterAction.setAction(action);
+        return masterAction;
     }
 
     @Override
@@ -93,7 +98,7 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
 
     @Override
     @Transactional
-    public MasterAction attach(Master master, Action action) {
+    public MasterAction attach(Master master, Action action,Price price) {
         MasterSpecialization masterSpecialization = attach(master, action.getSpecialization());
         MasterAction masterAction = null;
         for (MasterAction ma : masterSpecialization.getMasterActions()) {
@@ -103,7 +108,7 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
             }
         }
         if (masterAction == null) {
-            masterAction = new MasterAction(masterSpecialization, action);
+            masterAction = new MasterAction(masterSpecialization, action,price);
             masterSpecialization.getMasterActions().add(masterAction);
             masterActionRepository.update(masterSpecialization);
         }
@@ -154,11 +159,11 @@ public class DefaultMasterActionService extends AbstractService<MasterAction> im
 
     @Override
     @Transactional
-    public void createCustomAction(Master master, Specialization specialization, ActionData actionData) {
+    public void createCustomAction(Master master, Specialization specialization, ActionData actionData, Price price) {
         if(master != null && specialization != null) {
             Action action = new Action(actionData, ActionOwnType.CUSTOM, specialization);
 //            actionService.store(action);
-            attach(master, action);
+            attach(master, action,price);
         }
     }
 

@@ -18,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
+import ru.nzuri.domain.Price;
 import ru.nzuri.domain.action.Action;
+import ru.nzuri.domain.action.ActionOwnType;
 import ru.nzuri.domain.action.Specialization;
 import ru.nzuri.domain.action.SpecializationData;
 import ru.nzuri.domain.master.Master;
@@ -104,7 +106,7 @@ public class MasterActionController {
         if (master != null) {
             model.addObject("master", master);
             model.addObject("specialization", specializationService.get(specializationId));
-            model.addObject("action", new Action());
+            model.addObject("masterAction", masterActionService.createEmptyEntity());
             model.setViewName("master/action/create");
         } else {
             model.setViewName("404");
@@ -114,11 +116,11 @@ public class MasterActionController {
     
     @Secured("ROLE_MASTER")
     @RequestMapping(value = "/master/action/save/{specializationId}", method = RequestMethod.POST)
-    public String saveCustomAction(@ModelAttribute("action") Action action,@PathVariable Long specializationId, final RedirectAttributes redirectAttributes) {
+    public String saveCustomAction(@ModelAttribute("masterAction") MasterAction masterAction,@PathVariable Long specializationId, final RedirectAttributes redirectAttributes) {
         Master master = getCurrentMaster();
         Specialization specialization = specializationService.get(specializationId);
         if (master != null && specialization != null) {
-            masterActionService.createCustomAction(master,specialization,action.getData());
+            masterActionService.createCustomAction(master,specialization,masterAction.getAction().getData(),masterAction.getPrice());
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуга успешна обновлен!"));
         }
         return "redirect:/master/edit/actions";
@@ -126,9 +128,10 @@ public class MasterActionController {
 
     @Secured("ROLE_MASTER")
     @RequestMapping(value = "/master/edit/action/update", method = RequestMethod.POST)
-    public String updateService(@ModelAttribute("masterAction") MasterAction masterAction, final RedirectAttributes redirectAttributes) {
+    public String updateAction(@ModelAttribute("masterAction") MasterAction masterAction, final RedirectAttributes redirectAttributes) {
         Master master = getCurrentMaster();
         if (master != null) {
+            actionService.merge(masterAction.getAction());
             masterActionService.merge(masterAction);
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуга успешна обновлен!"));
         }
@@ -140,7 +143,7 @@ public class MasterActionController {
     public ModelAndView masterActionEdit(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("masterAction", masterActionService.get(id));
-        mav.setViewName("master/edit/masterActionEdit");
+        mav.setViewName("master/action/edit");
         return mav;
     }
 
@@ -152,7 +155,7 @@ public class MasterActionController {
             for (Long actionId : actions) {
                 Action action = actionService.get(actionId);
                 if (action != null) {
-                    masterActionService.attach(master, action);
+                    masterActionService.attach(master, action, Price.NULL);
                 }
             }
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуги успешно прикрепленны!"));
