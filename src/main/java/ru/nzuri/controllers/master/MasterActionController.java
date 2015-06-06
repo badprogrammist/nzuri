@@ -151,7 +151,7 @@ public class MasterActionController {
     @RequestMapping(value = "/master/edit/action/attach", method = RequestMethod.POST)
     public String attachActions(Long[] actions, final RedirectAttributes redirectAttributes) {
         Master master = getCurrentMaster();
-        if (master != null) {
+        if (master != null && actions != null) {
             for (Long actionId : actions) {
                 Action action = actionService.get(actionId);
                 if (action != null) {
@@ -159,6 +159,8 @@ public class MasterActionController {
                 }
             }
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуги успешно прикрепленны!"));
+        } else {
+            redirectAttributes.addFlashAttribute("message", new Message(MessageType.DANGER, "Не удалось прикрепить услуги"));
         }
         return "redirect:/master/edit/actions";
     }
