@@ -5,9 +5,6 @@
  */
 package ru.nzuri.controllers.master;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,9 +17,7 @@ import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
 import ru.nzuri.domain.Price;
 import ru.nzuri.domain.action.Action;
-import ru.nzuri.domain.action.ActionOwnType;
 import ru.nzuri.domain.action.Specialization;
-import ru.nzuri.domain.action.SpecializationData;
 import ru.nzuri.domain.master.Master;
 import ru.nzuri.domain.master.MasterAction;
 import ru.nzuri.domain.master.MasterSpecialization;
@@ -32,6 +27,9 @@ import ru.nzuri.services.action.ActionService;
 import ru.nzuri.services.action.SpecializationService;
 import ru.nzuri.services.master.MasterActionService;
 import ru.nzuri.services.master.MasterService;
+
+import javax.inject.Inject;
+import java.util.List;
 
 /**
  *
@@ -151,7 +149,7 @@ public class MasterActionController {
     @RequestMapping(value = "/master/edit/action/attach", method = RequestMethod.POST)
     public String attachActions(Long[] actions, final RedirectAttributes redirectAttributes) {
         Master master = getCurrentMaster();
-        if (master != null && actions != null) {
+        if (master != null && actions != null && actions.length != 0) {
             for (Long actionId : actions) {
                 Action action = actionService.get(actionId);
                 if (action != null) {

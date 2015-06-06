@@ -46,24 +46,29 @@
         </div>
         <div class="col-sm-6">
             <h3>Другие услуги</h3>
-            <form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/action/attach" >
-                <c:forEach items="${specializations}" var="specialization">
-                    <p>${specialization.data.title}</p>
-                    <c:forEach items="${specialization.actions}" var="action">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="actions"  value="${action.id}"/> ${action.data.title}
-                            </label>
-                        </div>
+            <c:if test="${!specializations.isEmpty()}">
+                <form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/master/edit/action/attach" >
+                    <c:forEach items="${specializations}" var="specialization">
+                        <p>${specialization.data.title}</p>
+                        <c:forEach items="${specialization.actions}" var="action">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="actions"  value="${action.id}"/> ${action.data.title}
+                                </label>
+                            </div>
+                        </c:forEach>
                     </c:forEach>
-                </c:forEach>
 
-                <div class="form-group last">
-                    <div class="col-sm-6">
-                        <button type="submit" class="btn btn-success btn-sm">Добавить</button>
+                    <div class="form-group last">
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-success btn-sm">Добавить</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </c:if>
+            <c:if test="${specializations.isEmpty()}">
+                <p>Нет кандидатов на добавление</p>
+            </c:if>
         </div>
     </div>
 
