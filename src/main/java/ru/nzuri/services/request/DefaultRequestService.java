@@ -1,5 +1,8 @@
 package ru.nzuri.services.request;
 
+import java.util.Date;
+import java.util.List;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nzuri.domain.EntityRepository;
@@ -10,9 +13,6 @@ import ru.nzuri.domain.request.RequestAction;
 import ru.nzuri.domain.request.RequestRepository;
 import ru.nzuri.domain.user.User;
 import ru.nzuri.services.AbstractService;
-
-import javax.inject.Inject;
-import java.util.List;
 
 /**
  * Created by bad on 06.06.2015.
@@ -30,8 +30,8 @@ public class DefaultRequestService extends AbstractService<Request> implements R
 
     @Override
     @Transactional
-    public Request createRequest(User owner, Master master, List<MasterAction> actions) {
-        Request request = new Request(owner,master);
+    public Request createRequest(User owner, Master master, List<MasterAction> actions,Date exerciseDate) {
+        Request request = new Request(owner,master,exerciseDate);
         for(MasterAction masterAction : actions) {
             RequestAction requestAction = new RequestAction(request,masterAction.getPrice(),masterAction.getAction());
             request.getActions().add(requestAction);

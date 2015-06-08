@@ -2,7 +2,7 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default navbar-static-top top-bar">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -19,17 +19,27 @@
                     <sec:authorize  access="hasRole('ROLE_ADMIN')">
                     <li><a href="${pageContext.request.contextPath}/specializations">Специализации</a></li>
                     </sec:authorize>
-
+                    <sec:authorize  access="hasRole('ROLE_MASTER')">
+                    <li><a href="${pageContext.request.contextPath}/master/requests">Заявки</a></li>
+                    </sec:authorize>
             </ul>
             <sec:authorize access="isAuthenticated()">
                 <sec:authentication var="principal" property="principal" />
-                <div class="navbar-text navbar-right">
-                    <common:image style="height:30px;  vertical-align:middle;" styleClass="img-circle" fileId="${principal.userData.icon.id}"/>
-                    ${principal.username}
-                    <form action="${pageContext.request.contextPath}/logout">
-                        <button type="submit">Выйти</button>
-                    </form>
-                </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" style="padding-top: 10px;padding-bottom: 10px; " data-toggle="dropdown" role="button" aria-expanded="false">
+                                <common:image style="height:30px; width:30px;" styleClass="img-circle" fileId="${principal.userData.icon.id}"/> ${principal.username} <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <form action="${pageContext.request.contextPath}/logout">
+                                        <button type="submit">Выйти</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
             </sec:authorize>
             <sec:authorize access="!isAuthenticated()">
                 <ul class="nav navbar-nav navbar-right">

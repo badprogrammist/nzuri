@@ -1,13 +1,23 @@
 package ru.nzuri.domain.request;
 
-import ru.nzuri.domain.AbstractEntity;
-import ru.nzuri.domain.master.Master;
-import ru.nzuri.domain.user.User;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import ru.nzuri.domain.AbstractEntity;
+import ru.nzuri.domain.master.Master;
+import ru.nzuri.domain.user.User;
 
 /**
  * Created by bad on 06.06.2015.
@@ -35,14 +45,19 @@ public class Request extends AbstractEntity<Request> {
     @Column(name = "date_creation")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation = new Date();
+    
+    @Column(name = "exercise_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date exerciseDate;
 
     @OneToMany(mappedBy = "request",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<RequestAction> actions = new ArrayList<>();
 
 
-    public Request(User owner, Master master) {
+    public Request(User owner, Master master,Date exerciseDate) {
         this.owner = owner;
         this.master = master;
+        this.exerciseDate = exerciseDate;
     }
 
     public Request() {
@@ -83,6 +98,14 @@ public class Request extends AbstractEntity<Request> {
     @Override
     public void merge(Request entity) {
 
+    }
+
+    public Date getExerciseDate() {
+        return exerciseDate;
+    }
+
+    public void setExerciseDate(Date exerciseDate) {
+        this.exerciseDate = exerciseDate;
     }
 
 

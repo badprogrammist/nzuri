@@ -5,10 +5,7 @@
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@taglib prefix="master" tagdir="/WEB-INF/tags/master" %>
 
-<p>${education.institution}</p>
-<p>${education.speciality}</p>
-<p>${education.startYear}</p>
-<p>${education.endYear}</p>
+<master:educationView educationItem="${education}"/>
 <c:if test="${editable}">
     <form
         method="post"

@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/picedit/picedit.min.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dropzone/dropzone.min.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/date-time-picker/css/bootstrap-datetimepicker.min.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,16 +24,15 @@
     </head>
     <body>
         <jsp:directive.include  file="/WEB-INF/tags/partials/default-header.tag"/>
-        <div class="container full-height">
-            <common:message/>
-            <jsp:doBody/>
-        </div>
-
+        <common:message/>
+        <jsp:doBody/>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/moment/min/moment-with-locales.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/intercooler.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/picedit/picedit.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/dropzone/dropzone.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/date-time-picker/js/bootstrap-datetimepicker.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
     </body>
 </html>
