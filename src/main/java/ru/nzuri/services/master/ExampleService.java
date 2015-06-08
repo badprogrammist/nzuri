@@ -5,6 +5,7 @@
  */
 package ru.nzuri.services.master;
 
+import java.util.List;
 import ru.nzuri.domain.file.File;
 import ru.nzuri.domain.master.Example;
 import ru.nzuri.domain.master.Master;
@@ -16,4 +17,5 @@ import ru.nzuri.services.EntityService;
  */
 public interface ExampleService extends EntityService<Example> {
     public Example addExample(Master master, File image, String comment);
+    public List<Example> getExamples(Master master);
 }

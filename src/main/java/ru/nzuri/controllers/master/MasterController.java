@@ -19,12 +19,14 @@ import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
 import ru.nzuri.domain.master.Address;
 import ru.nzuri.domain.master.Comment;
+import ru.nzuri.domain.master.Example;
 import ru.nzuri.domain.master.Master;
 import ru.nzuri.domain.user.User;
 import ru.nzuri.security.AuthenticationService;
 import ru.nzuri.services.action.ActionService;
 import ru.nzuri.services.action.SpecializationService;
 import ru.nzuri.services.master.CommentService;
+import ru.nzuri.services.master.ExampleService;
 import ru.nzuri.services.master.MasterService;
 
 /**
@@ -44,6 +46,9 @@ public class MasterController {
     private CommentService commentService;
     
     @Inject
+    private ExampleService exampleService;
+    
+    @Inject
     private ActionService actionService;
     
     @Inject
@@ -61,7 +66,7 @@ public class MasterController {
     public ModelAndView view(@PathVariable Long id) {
         Master master = masterService.get(id);
         User currentUser = authenticationService.getPrincipal();
-        return prepareView(master,currentUser,commentService.getAll(master));
+        return prepareView(master,currentUser,commentService.getAll(master),exampleService.getExamples(master));
     }
 
     @Secured("ROLE_MASTER")
@@ -85,6 +90,7 @@ public class MasterController {
         Master master = getCurrentMaster();
         if(master != null) {
             model.addObject("master", master);
+            model.addObject("examples",exampleService.getExamples(master));
             model.setViewName("master/edit/examples");
         } else {
             model.setViewName("404");
@@ -123,12 +129,13 @@ public class MasterController {
         return masterService.get(currentUser);
     }
 
-    public static ModelAndView prepareView(Master master, User currentUser, List<Comment> comments) {
+    public static ModelAndView prepareView(Master master, User currentUser, List<Comment> comments, List<Example> examples) {
         ModelAndView model = new ModelAndView();
         if(master != null) {
             model.addObject("master", master);
             model.addObject("comment", new Comment());
             model.addObject("comments", comments);
+            model.addObject("examples", examples);
             model.addObject("editable", master.getUser().equals(currentUser));
             model.setViewName("master/view");
         } else {

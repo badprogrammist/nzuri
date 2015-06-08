@@ -7,6 +7,7 @@ package ru.nzuri.domain.master;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,6 +26,7 @@ import ru.nzuri.domain.user.User;
  */
 @Entity
 @Table(name = "masters")
+@Cacheable
 @NamedQueries({
     @NamedQuery(
             name = "Master.findAll",

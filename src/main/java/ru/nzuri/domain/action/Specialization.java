@@ -7,6 +7,7 @@ package ru.nzuri.domain.action;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -27,6 +28,7 @@ import ru.nzuri.domain.AbstractEntity;
  */
 @Entity
 @Table(name = "specializations")
+@Cacheable
 @NamedQueries({
     @NamedQuery(name = "Specialization.findAll",
             query = "Select c from Specialization c"),

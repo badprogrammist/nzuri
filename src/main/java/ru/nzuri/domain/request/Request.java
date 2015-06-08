@@ -3,6 +3,7 @@ package ru.nzuri.domain.request;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ import ru.nzuri.domain.user.User;
  */
 @Entity
 @Table(name = "requests")
+@Cacheable
 @NamedQueries({
     @NamedQuery(name = "Request.findAll",
         query = "Select c from Request c"),

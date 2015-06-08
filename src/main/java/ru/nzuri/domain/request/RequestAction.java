@@ -11,6 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "request_actions")
+@Cacheable
 @NamedQueries({
     @NamedQuery(name = "RequestAction.findAll",
         query = "Select c from RequestAction c"),

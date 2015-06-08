@@ -5,11 +5,13 @@
  */
 package ru.nzuri.repositories.master;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import ru.nzuri.domain.master.Example;
 import ru.nzuri.domain.master.ExampleRepository;
+import ru.nzuri.domain.master.Master;
 import ru.nzuri.repositories.AbstractRepositoryJPA;
 
 /**
@@ -29,6 +31,13 @@ public class ExampleRepositoryJPA extends AbstractRepositoryJPA<Example> impleme
     @Override
     protected EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    @Override
+    public List<Example> findExamples(Master master) {
+        return getEntityManager().createNamedQuery("Example.findAllByMaster", Example.class)
+                .setParameter("master", master)
+                .getResultList();
     }
     
 }

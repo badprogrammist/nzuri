@@ -5,6 +5,7 @@
  */
 package ru.nzuri.services.master;
 
+import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,10 @@ public class DefaultExampleService extends AbstractService<Example> implements E
     @Override
     protected EntityRepository getRepository() {
         return exampleRepository;
+    }
+    
+    public List<Example> getExamples(Master master) {
+        return exampleRepository.findExamples(master);
     }
 
     @Override

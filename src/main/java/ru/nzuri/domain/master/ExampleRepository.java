@@ -5,6 +5,7 @@
  */
 package ru.nzuri.domain.master;
 
+import java.util.List;
 import ru.nzuri.domain.EntityRepository;
 
 /**
@@ -12,5 +13,5 @@ import ru.nzuri.domain.EntityRepository;
  * @author bad
  */
 public interface ExampleRepository extends EntityRepository<Example> {
-    
+    public List<Example> findExamples(Master master);
 }

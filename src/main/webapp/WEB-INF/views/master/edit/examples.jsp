@@ -8,7 +8,7 @@
     <master:tabMenu activeTab="examples"/>
     
     <div id="examples" class="row">
-        <c:forEach var="exampleItem" items="${master.examples}">
+        <c:forEach var="exampleItem" items="${examples}">
             <div class="col-xs-6 col-md-3">
                 <a href="#" class="thumbnail">
                     <common:image fileId="${exampleItem.image.id}"/>

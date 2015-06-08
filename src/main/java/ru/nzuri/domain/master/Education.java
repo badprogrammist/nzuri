@@ -5,6 +5,7 @@
  */
 package ru.nzuri.domain.master;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "educations")
+@Cacheable
 @NamedQueries({
     @NamedQuery(name = "Education.findAll",
             query = "Select c from Education  c"),

@@ -34,7 +34,7 @@
 
         <div class="row">
             <h2>Примеры работ</h2>
-            <c:forEach var="example" items="${master.examples}">
+            <c:forEach var="example" items="${examples}">
                 <div class="col-xs-6 col-md-3">
                     <a href="#" class="thumbnail">
                         <common:image fileId="${example.image.id}"/>

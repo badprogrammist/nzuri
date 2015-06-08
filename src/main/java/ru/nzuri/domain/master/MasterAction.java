@@ -5,6 +5,7 @@
  */
 package ru.nzuri.domain.master;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -22,6 +23,7 @@ import ru.nzuri.domain.action.Action;
  */
 @Entity
 @Table(name = "master_actions")
+@Cacheable
 @NamedQueries({
     @NamedQuery(name = "MasterAction.findAll",
             query = "Select c from MasterAction c"),

@@ -5,6 +5,7 @@
  */
 package ru.nzuri.domain.file;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -19,6 +20,7 @@ import ru.nzuri.domain.AbstractEntity;
  */
 @Entity
 @Table(name = "files")
+@Cacheable
 @NamedQueries({
     @NamedQuery(name = "File.findAll",
             query = "Select c from File c")

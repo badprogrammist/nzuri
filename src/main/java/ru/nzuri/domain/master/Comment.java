@@ -6,6 +6,7 @@
 package ru.nzuri.domain.master;
 
 import java.util.Date;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -23,6 +24,7 @@ import ru.nzuri.domain.user.User;
  */
 @Entity
 @Table(name = "comments")
+@Cacheable
 @NamedQueries({
     @NamedQuery(name = "Comment.findAll",
             query = "Select c from Comment  c"),

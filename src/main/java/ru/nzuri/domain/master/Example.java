@@ -5,6 +5,7 @@
  */
 package ru.nzuri.domain.master;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,9 +23,12 @@ import ru.nzuri.domain.file.File;
  */
 @Entity
 @Table(name = "examples")
+@Cacheable
 @NamedQueries({
     @NamedQuery(name = "Example.findAll",
-            query = "Select c from Example  c")
+            query = "Select c from Example  c"),
+    @NamedQuery(name = "Example.findAllByMaster",
+            query = "Select c from Example c where c.master = :master")
 })
 public class Example extends AbstractMasterCharacteristic<Example> {
 

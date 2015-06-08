@@ -5,6 +5,7 @@
  */
 package ru.nzuri.domain.action;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import ru.nzuri.domain.AbstractEntity;
  */
 @Entity
 @Table(name = "actions")
+@Cacheable
 @NamedQueries({
     @NamedQuery(name = "Action.findAll",
             query = "Select c from Action c"),
