@@ -4,21 +4,21 @@
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@taglib prefix="master" tagdir="/WEB-INF/tags/master" %>
-<layout:default title="Профиль">
+<layout:default title="Косметика">
 
-    <master:tabMenu activeTab="education"/>
-    <div id="master_educations">
-        <jsp:include page="../education/_list.jsp"/>
+    <master:tabMenu activeTab="cosmetic"/>
+    <div id="master_cosmetics">
+        <jsp:include page="../cosmetic/_list.jsp"/>
     </div>
     <form:form
         class="form-horizontal"
         role="form"
         method="post"
-        ic-post-to="${pageContext.request.contextPath}/master/edit/education/save"
-        ic-target="#master_educations"
+        ic-post-to="${pageContext.request.contextPath}/master/edit/cosmetic/save"
+        ic-target="#master_cosmetics"
         ic-transition="none"
-        modelAttribute="education">
-        <master:educationForm/>
+        modelAttribute="cosmetic">
+        <master:cosmeticForm cosmeticItem="${cosmetic}"/>
         <div class="form-group last">
             <div class="col-sm-offset-3 col-sm-3">
                 <button type="submit" class="btn btn-success btn-sm btn-block">Сохранить</button>

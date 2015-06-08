@@ -10,8 +10,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nzuri.domain.EntityRepository;
-import ru.nzuri.domain.master.Education;
-import ru.nzuri.domain.master.EducationRepository;
+import ru.nzuri.domain.master.Cosmetic;
+import ru.nzuri.domain.master.CosmeticRepository;
 import ru.nzuri.domain.master.Master;
 import ru.nzuri.services.AbstractService;
 
@@ -21,26 +21,26 @@ import ru.nzuri.services.AbstractService;
  */
 @Service
 @Transactional
-public class DefaultEducationService extends AbstractService<Education> implements EducationService {
+public class DefaultCosmeticService extends AbstractService<Cosmetic> implements CosmeticService {
 
     @Inject
-    private EducationRepository educationRepository;
+    private CosmeticRepository cosmeticRepository;
     
     
     
     @Override
     protected EntityRepository getRepository() {
-        return educationRepository;
+        return cosmeticRepository;
     }
 
     @Override
-    public Education createEmptyEntity() {
-        return new Education();
+    public Cosmetic createEmptyEntity() {
+        return new Cosmetic();
     }
 
     @Override
-    public List<Education> getAll(Master master) {
-        return educationRepository.findAll(master);
+    public List<Cosmetic> getAll(Master master) {
+        return cosmeticRepository.findAll(master);
     }
     
 }

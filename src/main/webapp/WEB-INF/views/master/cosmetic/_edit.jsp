@@ -10,11 +10,11 @@
     class="form-horizontal"
     role="form"
     method="post"
-    ic-post-to="${pageContext.request.contextPath}/master/edit/education/update"
-    ic-target="#master_educations"
+    ic-post-to="${pageContext.request.contextPath}/master/edit/cosmetic/update"
+    ic-target="#master_cosmetics"
     ic-transition="none"
-    modelAttribute="education" >
-    <master:educationForm />
+    modelAttribute="cosmetic" >
+    <master:cosmeticForm cosmeticItem="${cosmetic}" />
     <div class="form-group last">
         <div class="col-sm-offset-3 col-sm-3">
             <button type="submit" class="btn btn-success btn-sm btn-block">Сохранить</button>
@@ -23,8 +23,8 @@
     <div class="form-group last">
         <div class="col-sm-offset-3 col-sm-3">
             <button
-                ic-get-from="${pageContext.request.contextPath}/master/education/list"
-                ic-target="#master_educations"
+                ic-get-from="${pageContext.request.contextPath}/master/cosmetic/list"
+                ic-target="#master_cosmetics"
                 ic-transition="none"
                 class="btn btn-success btn-sm btn-block">
                 Отмена

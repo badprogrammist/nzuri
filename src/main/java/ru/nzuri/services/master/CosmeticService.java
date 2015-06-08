@@ -6,7 +6,7 @@
 package ru.nzuri.services.master;
 
 import java.util.List;
-import ru.nzuri.domain.master.Education;
+import ru.nzuri.domain.master.Cosmetic;
 import ru.nzuri.domain.master.Master;
 import ru.nzuri.services.EntityService;
 
@@ -14,6 +14,6 @@ import ru.nzuri.services.EntityService;
  *
  * @author bad
  */
-public interface EducationService extends EntityService<Education> {
-    public List<Education> getAll(Master master);
+public interface CosmeticService extends EntityService<Cosmetic> {
+    public List<Cosmetic> getAll(Master master);
 }

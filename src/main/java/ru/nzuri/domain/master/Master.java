@@ -60,6 +60,9 @@ public class Master extends AbstractEntity<Master> {
     
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cosmetic> cosmetics = new ArrayList<>();
 
     public Master() {
     }
@@ -121,6 +124,14 @@ public class Master extends AbstractEntity<Master> {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<Cosmetic> getCosmetics() {
+        return cosmetics;
+    }
+
+    public void setCosmetics(List<Cosmetic> cosmetics) {
+        this.cosmetics = cosmetics;
     }
 
 }

@@ -17,75 +17,41 @@ import javax.persistence.Table;
  * @author bad
  */
 @Entity
-@Table(name = "educations")
+@Table(name = "cosmetics")
 @Cacheable
 @NamedQueries({
-    @NamedQuery(name = "Education.findAll",
-            query = "Select c from Education  c"),
-    @NamedQuery(name = "Education.findAllByMaster",
-            query = "Select c from Education  c where c.master = :master")
+    @NamedQuery(name = "Cosmetic.findAll",
+            query = "Select c from Cosmetic  c"),
+    @NamedQuery(name = "Cosmetic.findAllByMaster",
+            query = "Select c from Cosmetic  c where c.master = :master")
 })
-public class Education extends AbstractMasterCharacteristic<Education>{
+public class Cosmetic extends AbstractMasterCharacteristic<Cosmetic>{
 
-    @Column(name = "institution")
-    private String institution;
+    @Column(name = "title")
+    private String title;
     
-    @Column(name = "speciality")
-    private String speciality;
-    
-    @Column(name = "start_year")
-    private String startYear;
-    
-    @Column(name = "end_year")
-    private String endYear;
-
-    public Education(Master master) {
+    public Cosmetic(Master master) {
         super(master);
     }
 
-    public Education() {
+    public Cosmetic() {
     }
     
     
     @Override
-    public void merge(Education entity) {
-        this.institution = entity.getInstitution();
-        this.speciality = entity.getSpeciality();
-        this.startYear = entity.getStartYear();
-        this.endYear = entity.getEndYear();
+    public void merge(Cosmetic entity) {
+        this.title = entity.getTitle();
     }
 
-    public String getInstitution() {
-        return institution;
+    public String getTitle() {
+        return title;
     }
 
-    public void setInstitution(String institution) {
-        this.institution = institution;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getSpeciality() {
-        return speciality;
-    }
-
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
-    }
-
-    public String getStartYear() {
-        return startYear;
-    }
-
-    public void setStartYear(String startYear) {
-        this.startYear = startYear;
-    }
-
-    public String getEndYear() {
-        return endYear;
-    }
-
-    public void setEndYear(String endYear) {
-        this.endYear = endYear;
-    }
+    
 
     
     

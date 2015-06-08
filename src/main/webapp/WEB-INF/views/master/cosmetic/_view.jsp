@@ -5,19 +5,19 @@
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@taglib prefix="master" tagdir="/WEB-INF/tags/master" %>
 
-<master:educationView educationItem="${education}"/>
+<master:cosmeticView cosmeticItem="${cosmetic}"/>
 <c:if test="${editable}">
     <form
         method="post"
-        ic-post-to="${pageContext.request.contextPath}/master/edit/education/remove/${education.id}"
-        ic-target="#master_educations"
+        ic-post-to="${pageContext.request.contextPath}/master/edit/cosmetic/remove/${cosmetic.id}"
+        ic-target="#master_cosmetics"
         ic-transition="none">
         <button class="btn bg-primary btn-sm" type="submit">Удалить</button>
     </form>
     <button
-        ic-target="#education_item_${status.index}"
+        ic-target="#cosmetic_item_${status.index}"
         ic-transition="none"
-        ic-get-from="${pageContext.request.contextPath}/master/education/edit/${education.id}"
+        ic-get-from="${pageContext.request.contextPath}/master/cosmetic/edit/${cosmetic.id}"
         class="btn btn-default">
         Редактировать
     </button>

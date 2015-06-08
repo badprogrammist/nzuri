@@ -9,8 +9,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-import ru.nzuri.domain.master.Education;
-import ru.nzuri.domain.master.EducationRepository;
+import ru.nzuri.domain.master.Cosmetic;
+import ru.nzuri.domain.master.CosmeticRepository;
 import ru.nzuri.domain.master.Master;
 import ru.nzuri.repositories.AbstractRepositoryJPA;
 
@@ -19,13 +19,13 @@ import ru.nzuri.repositories.AbstractRepositoryJPA;
  * @author bad
  */
 @Repository
-public class EducationRepositoryJPA extends AbstractRepositoryJPA<Education> implements EducationRepository {
+public class CosmeticRepositoryJPA extends AbstractRepositoryJPA<Cosmetic> implements CosmeticRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public EducationRepositoryJPA() {
-        super(Education.class);
+    public CosmeticRepositoryJPA() {
+        super(Cosmetic.class);
     }
     
     @Override
@@ -34,8 +34,8 @@ public class EducationRepositoryJPA extends AbstractRepositoryJPA<Education> imp
     }
 
     @Override
-    public List<Education> findAll(Master master) {
-        return getEntityManager().createNamedQuery("Education.findAllByMaster", Education.class)
+    public List<Cosmetic> findAll(Master master) {
+        return getEntityManager().createNamedQuery("Cosmetic.findAllByMaster", Cosmetic.class)
                 .setParameter("master", master)
                 .getResultList();
     }

@@ -28,8 +28,8 @@
 
             </div>
         </div>
-        
-                    
+
+
 
 
         <div class="row">
@@ -49,50 +49,59 @@
 
 
 
-        <c:if test="${editable}">
-            <a href="master/edit">Редактировать</a>
-        </c:if>
+    <c:if test="${editable}">
+        <a href="master/edit">Редактировать</a>
+    </c:if>
 
 
 
 
 
-        <div class="row">
-            <h2>Образование</h2>
-            <c:forEach var="education" items="${master.educations}">
-                <div class="row">
-                    <master:educationView educationItem="${education}"/>
-                </div>
-            </c:forEach>
-        </div>
+    <div class="row">
+        <h2>Образование</h2>
+        <c:forEach var="education" items="${master.educations}">
+            <div class="row">
+                <master:educationView educationItem="${education}"/>
+            </div>
+        </c:forEach>
+    </div>
+
+    <div class="row">
+        <h2>Косметика</h2>
+        <c:forEach var="cosmetic" items="${master.cosmetics}">
+            <div class="row">
+                <master:cosmeticView cosmeticItem="${cosmetic}"/>
+            </div>
+        </c:forEach>
+    </div>
 
 
-        <div class="row">
-            <h2>Услуги</h2>
-            <sec:authorize access="hasRole('ROLE_USER')">
-                <request:form masterItem="${master}"/>
-            </sec:authorize>
-            <sec:authorize access="!hasRole('ROLE_USER')">
-                <c:if test="${!master.specializations.isEmpty()}">
-                    <c:forEach var="masterSpecialization" items="${master.specializations}">
-                        <p>${masterSpecialization.specialization.data.title}</p>
-                        <c:forEach var="masterAction" items="${masterSpecialization.masterActions}">
-                            ${masterAction.action.data.title} ${masterAction.price.value}
-                        </c:forEach>
+    <div class="row">
+        <h2>Услуги</h2>
+        <sec:authorize access="hasRole('ROLE_USER')">
+            <request:form masterItem="${master}"/>
+        </sec:authorize>
+        <sec:authorize access="!hasRole('ROLE_USER')">
+            <c:if test="${!master.specializations.isEmpty()}">
+                <c:forEach var="masterSpecialization" items="${master.specializations}">
+                    <p>${masterSpecialization.specialization.data.title}</p>
+                    <c:forEach var="masterAction" items="${masterSpecialization.masterActions}">
+                        ${masterAction.action.data.title} ${masterAction.price.value}
                     </c:forEach>
-                </c:if>
-                <c:if test="${specializations.isEmpty()}">
-                    <p>Нет услуг</p>
-                </c:if>
-            </sec:authorize>
-        </div>
+                </c:forEach>
+            </c:if>
+            <c:if test="${specializations.isEmpty()}">
+                <p>Нет услуг</p>
+            </c:if>
+        </sec:authorize>
+    </div>
 
 
-        <h2>Комментарии</h2>
+    <h2>Комментарии</h2>
 
-        <div id="master_comments">
-            <jsp:include page="comment/_comments.jsp"/>
-        </div>
-        <master:addCommentForm updateContainerSelector="#master_comments"/>
+    <div id="master_comments">
+        <jsp:include page="comment/_comments.jsp"/>
+    </div>
+    <master:addCommentForm updateContainerSelector="#master_comments"/>
 
 </layout:default>

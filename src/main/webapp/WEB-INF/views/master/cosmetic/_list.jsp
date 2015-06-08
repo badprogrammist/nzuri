@@ -4,8 +4,8 @@
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 <%@taglib prefix="master" tagdir="/WEB-INF/tags/master" %>
-<c:forEach var="education" items="${educations}" varStatus="status">
-    <div id="education_item_${status.index}">
+<c:forEach var="cosmetic" items="${cosmetics}" varStatus="status">
+    <div id="cosmetic_item_${status.index}">
         <jsp:directive.include file="_view.jsp"/>
     </div>
 </c:forEach>

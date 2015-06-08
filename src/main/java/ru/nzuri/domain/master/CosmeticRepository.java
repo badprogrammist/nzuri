@@ -12,6 +12,6 @@ import ru.nzuri.domain.EntityRepository;
  *
  * @author bad
  */
-public interface EducationRepository extends EntityRepository<Education> {
-    public List<Education> findAll(Master master);
+public interface CosmeticRepository extends EntityRepository<Cosmetic> {
+    public List<Cosmetic> findAll(Master master);
 }

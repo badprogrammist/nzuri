@@ -16,11 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nzuri.controllers.message.Message;
 import ru.nzuri.controllers.message.MessageType;
-import ru.nzuri.domain.master.Education;
+import ru.nzuri.domain.master.Cosmetic;
 import ru.nzuri.domain.master.Master;
 import ru.nzuri.domain.user.User;
 import ru.nzuri.security.AuthenticationService;
-import ru.nzuri.services.master.EducationService;
+import ru.nzuri.services.master.CosmeticService;
 import ru.nzuri.services.master.MasterService;
 
 /**
@@ -28,86 +28,86 @@ import ru.nzuri.services.master.MasterService;
  * @author bad
  */
 @Controller
-public class EducationController {
+public class CosmeticController {
 
     @Inject
     private MasterService masterService;
 
     @Inject
-    private EducationService educationService;
+    private CosmeticService cosmeticService;
 
     @Inject
     private AuthenticationService authenticationService;
 
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/education", method = RequestMethod.GET)
-    public ModelAndView masterEducationEdit() {
+    @RequestMapping(value = "/master/edit/cosmetic", method = RequestMethod.GET)
+    public ModelAndView masterCosmeticEdit() {
         ModelAndView mav = new ModelAndView();
         prepareList(mav);
-        mav.addObject("education", educationService.createEmptyEntity());
-        mav.setViewName("master/edit/education");
+        mav.addObject("cosmetic", cosmeticService.createEmptyEntity());
+        mav.setViewName("master/edit/cosmetic");
         return mav;
     }
 
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/education/save", method = RequestMethod.POST)
-    public ModelAndView save(@ModelAttribute("education") Education education, final RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/master/edit/cosmetic/save", method = RequestMethod.POST)
+    public ModelAndView save(@ModelAttribute("cosmetic") Cosmetic cosmetic, final RedirectAttributes redirectAttributes) {
         Master master = getCurrentMaster();
         ModelAndView mav = new ModelAndView();
         if (master != null) {
-            education.setMaster(master);
-            educationService.store(education);
+            cosmetic.setMaster(master);
+            cosmeticService.store(cosmetic);
             prepareList(mav);
-            redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Образовательное учреждение добавленно!"));
+            redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Марка косметики добавленна!"));
         }
-        mav.setViewName("master/education/_list");
+        mav.setViewName("master/cosmetic/_list");
         return mav;
     }
 
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/education/edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/master/cosmetic/edit/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("education", educationService.get(id));
-        mav.setViewName("master/education/_edit");
+        mav.addObject("cosmetic", cosmeticService.get(id));
+        mav.setViewName("master/cosmetic/_edit");
         return mav;
     }
     
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/education/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/master/cosmetic/list", method = RequestMethod.GET)
     public ModelAndView list() {
         ModelAndView mav = new ModelAndView();
         prepareList(mav);
-        mav.setViewName("master/education/_list");
+        mav.setViewName("master/cosmetic/_list");
         return mav;
     }
 
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/education/update", method = RequestMethod.POST)
-    public ModelAndView update(@ModelAttribute("education") Education education, final RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/master/edit/cosmetic/update", method = RequestMethod.POST)
+    public ModelAndView update(@ModelAttribute("cosmetic") Cosmetic cosmetic, final RedirectAttributes redirectAttributes) {
         ModelAndView mav = new ModelAndView();
-        educationService.merge(education);
+        cosmeticService.merge(cosmetic);
         prepareList(mav);
-        mav.setViewName("master/education/_list");
-        redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуги успешно прикрепленны!"));
+        mav.setViewName("master/cosmetic/_list");
+        redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Изменения сохранены"));
         return mav;
     }
 
     @Secured("ROLE_MASTER")
-    @RequestMapping(value = "/master/edit/education/remove/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/master/edit/cosmetic/remove/{id}", method = RequestMethod.POST)
     public ModelAndView remove(@PathVariable Long id, final RedirectAttributes redirectAttributes) {
         ModelAndView mav = new ModelAndView();
-        educationService.remove(id);
+        cosmeticService.remove(id);
         prepareList(mav);
-        mav.setViewName("master/education/_list");
-        redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Услуги успешно прикрепленны!"));
+        mav.setViewName("master/cosmetic/_list");
+        redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Объект удален"));
         return mav;
     }
     
     private void prepareList(ModelAndView mav) {
         Master master = getCurrentMaster();
         User currentUser = authenticationService.getPrincipal();
-        mav.addObject("educations", educationService.getAll(master));
+        mav.addObject("cosmetics", cosmeticService.getAll(master));
         mav.addObject("editable", master.getUser().equals(currentUser));
     }
 
