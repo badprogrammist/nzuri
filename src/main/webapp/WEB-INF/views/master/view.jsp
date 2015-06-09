@@ -11,6 +11,7 @@
 
     <c:set var="headerImagePath" value="${!master.examples.isEmpty() ? pageContext.request.contextPath.concat('/file/'.concat(master.examples.get(0).image.id)) : pageContext.request.contextPath.concat('/resources/images/master-view-default-header.jpg')}"/>
     <header class="master-view-header" style="background-image:url(${headerImagePath})"></header>
+    <p>Рейтинг - <fmt:formatNumber type="number" pattern="##.##" value="${master.totalRating}"/></p>
 
     <div class="container">
         <div class="row">

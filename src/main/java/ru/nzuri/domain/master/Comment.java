@@ -8,6 +8,7 @@ package ru.nzuri.domain.master;
 import java.util.Date;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,6 +44,9 @@ public class Comment extends AbstractMasterCharacteristic<Comment> {
     @Column(name = "date_created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated = new Date();
+    
+    @Embedded
+    private Ratings ratings = new Ratings();
 
     public Comment() {
     }
@@ -80,6 +84,14 @@ public class Comment extends AbstractMasterCharacteristic<Comment> {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public Ratings getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Ratings ratings) {
+        this.ratings = ratings;
     }
     
     

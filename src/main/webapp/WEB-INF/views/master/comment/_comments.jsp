@@ -19,6 +19,14 @@
                     value="${comment.dateCreated}"/>
                 <small>${formattedDateCreated}</small>
                 <p>${comment.content}</p>
+                <div class="media-bottom">
+                    <ul>
+                        <li>Опыт ${comment.ratings.experience}</li>
+                        <li>Обслуживание ${comment.ratings.politeness}</li>
+                        <li>Цена ${comment.ratings.price}</li>
+                    </ul>
+                    
+                </div>
             </div>
         </div>
     </c:forEach>  

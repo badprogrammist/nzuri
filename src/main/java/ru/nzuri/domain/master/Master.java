@@ -63,7 +63,7 @@ public class Master extends AbstractEntity<Master> {
     
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cosmetic> cosmetics = new ArrayList<>();
-
+ 
     public Master() {
     }
 
@@ -71,6 +71,15 @@ public class Master extends AbstractEntity<Master> {
         this.user = user;
     }
 
+    public double getTotalRating() {
+        Double totalRating = 0.0;
+        for(Comment comment : comments) {
+            totalRating += comment.getRatings().getTotalRating();
+        }
+        totalRating /= comments.size();
+        return totalRating;
+    }
+    
     public User getUser() {
         return user;
     }
