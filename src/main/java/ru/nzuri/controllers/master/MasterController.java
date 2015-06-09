@@ -124,6 +124,16 @@ public class MasterController {
         return "redirect:/master/edit/address";
     }
     
+    @Secured("ROLE_MASTER")
+    @RequestMapping(value = "/master/edit/main/update", method = RequestMethod.POST)
+    public String updateMain(@ModelAttribute("master") Master master,final RedirectAttributes redirectAttributes) {
+        if(master != null && master.getId() != null) {
+            masterService.merge(master);
+            redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS, "Профиль успешно обновлен"));
+        }
+        return "redirect:/master/edit";
+    }
+    
     private Master getCurrentMaster() {
         User currentUser = authenticationService.getPrincipal();
         return masterService.get(currentUser);

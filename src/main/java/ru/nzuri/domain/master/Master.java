@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -48,6 +49,9 @@ public class Master extends AbstractEntity<Master> {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
+    
+    @Embedded
+    private MasterData masterData = new MasterData();
 
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Example> examples = new ArrayList<>();
@@ -117,6 +121,7 @@ public class Master extends AbstractEntity<Master> {
 
     @Override
     public void merge(Master entity) {
+        this.masterData = entity.getMasterData();
     }
 
     public List<Education> getEducations() {
@@ -141,6 +146,14 @@ public class Master extends AbstractEntity<Master> {
 
     public void setCosmetics(List<Cosmetic> cosmetics) {
         this.cosmetics = cosmetics;
+    }
+
+    public MasterData getMasterData() {
+        return masterData;
+    }
+
+    public void setMasterData(MasterData masterData) {
+        this.masterData = masterData;
     }
 
 }
